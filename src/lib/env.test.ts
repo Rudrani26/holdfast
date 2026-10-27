@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { parse } from "dotenv";
 import { describe, expect, it } from "vitest";
 import { EnvValidationError, parseEnv } from "./env";
 
@@ -62,6 +65,11 @@ describe("parseEnv", () => {
     expect(env.AI_DAILY_CALL_LIMIT).toBe(300);
     expect(env.DEMO_BANNER).toBe(true);
     expect(env.SETTLEMENT_MODE).toBe("PARTIAL_CAPTURE_THEN_VOID");
+  });
+
+  it("accepts .env.example as-is, so copying it to .env.local starts cleanly", () => {
+    const example = parse(readFileSync(path.resolve(process.cwd(), ".env.example")));
+    expect(parseEnv(example).PAYPAL_ENV).toBe("sandbox");
   });
 
   it("treats blank optional values as unset", () => {

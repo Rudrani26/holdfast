@@ -40,13 +40,13 @@ Buyer approval in the spike is manual: the create-order script prints the order'
 | E7 | Real webhooks | Listener (`spike/webhook-server.ts`) on `localhost:8787` exposed via a free `cloudflared` quick tunnel; register URL in sandbox app; capture events from E1–E4; call `verify-webhook-signature` | `verification_status` per event |
 | E8 | Buyer view | Log in to sandbox.paypal.com as the personal account after E1, E2, E4 | screenshots of activity; note whether any amount still shows as pending/held |
 
-**What the documentation says, to be confirmed by E1/E2 (VERIFIED (doc)):**
-- Authorization status values include `CREATED`, `CAPTURED`, `DENIED`, `PARTIALLY_CAPTURED`, `VOIDED`, `PENDING` (Orders v2 `authorization_status` definition).
-- An authorization is valid 29 days; PayPal recommends capturing within a 3-day honor period.
-- Partial capture: capture an amount below the authorized total; `final_capture: false` allows further captures.
-- A PayPal beta guide states an authorization can be voided after a partial capture **provided `final_capture` was false**, which voids any future captures.
-- The void endpoint returns `PREVIOUSLY_CAPTURED` ("Authorization has been previously captured and cannot be voided") in at least one case.
-- A legacy PayPal doc says partial captures of PayPal-wallet authorizations must be enabled on the account. **UNVERIFIED** for current sandbox REST accounts — E1/E2 will show.
+**Spike outcome (run 2026-10-27; full report and evidence links in `spike/RESULTS.md`):**
+- Authorization status values: VERIFIED (doc). **VERIFIED (sandbox):** observed `CREATED`, `PARTIALLY_CAPTURED`, `CAPTURED` and `VOIDED` ([E1](../spike/results/E1-04-get-auth-after-capture.json), [E2](../spike/results/E2-04-get-auth-after-capture.json)).
+- **VERIFIED (sandbox):** an authorization is valid for 29 days (authorized 2026-10-27T22:41Z, expires 2026-11-25T22:41Z, [E1](../spike/results/E1-02-authorize.json)). The 3-day honor period is VERIFIED (doc) only; not tested.
+- **VERIFIED (sandbox):** partial capture of a PayPal-wallet authorization works with **no account setting enabled**. $38.00 of $200.00 → `201 COMPLETED` ([E1](../spike/results/E1-03-capture-1.json)). The legacy enablement note does not apply to this sandbox REST account.
+- **VERIFIED (sandbox):** a void after a partial capture with `final_capture:false` is accepted: `200`, authorization `VOIDED` ([E1](../spike/results/E1-05-void-1.json)).
+- **VERIFIED (sandbox):** after a partial capture with `final_capture:true`, the authorization reports `CAPTURED`, even though only $38 of $200 was taken. A void then fails with `422`, issue `PREVIOUSLY_CAPTURED` ([E2](../spike/results/E2-05-void-1.json)).
+- Whether the buyer sees the voided remainder as released: **UNVERIFIED** until E8 (owner buyer-view check).
 
 **Decision rule → `SETTLEMENT_MODE`:**
 
@@ -101,7 +101,7 @@ All POSTs send headers: `Authorization: Bearer <token>`, `Content-Type: applicat
   }
 }
 ```
-Expected: `201`, `status: CREATED` or `PAYER_ACTION_REQUIRED`, approval link. The `experience_context` fields are VERIFIED (doc) as Orders v2 fields; exact accepted values UNVERIFIED until E1.
+**VERIFIED (sandbox):** returns **`200`** (not 201) with `status: PAYER_ACTION_REQUIRED` and a `payer-action` link, for every order created. Accept either 200 or 201. This exact `experience_context` is accepted for AUTHORIZE orders. Without a `return_url`, the hosted approval page loops after "Review order", but the approval is still recorded (`APPROVED`). The app uses the JS SDK popup instead. Evidence: [E1-01](../spike/results/E1-01-create-order.json).
 
 Request ID: `rental:<rentalId>:create-order`.
 
@@ -123,10 +123,12 @@ Read `purchase_units[0].payments.authorizations[0]`: `id`, `status`, `amount`, `
   "soft_descriptor": "HOLDFAST"
 }
 ```
-Request ID `settle:<rentalId>:<settlementSeq>:capture`. `final_capture` per mode. `invoice_id` must be unique per capture (VERIFIED (doc) that duplicate invoice IDs error — negative-test code `DUPLICATE_INVOICE_ID`).
+Request ID `settle:<rentalId>:<settlementSeq>:capture`. `final_capture` per mode. `invoice_id` must be unique per capture. Duplicate invoice IDs return an error, negative-test code `DUPLICATE_INVOICE_ID`: VERIFIED (doc), and **VERIFIED (sandbox)** via the mock header as `422 UNPROCESSABLE_ENTITY` with no capture created ([E6](../spike/results/E6-08-negative-DUPLICATE_INVOICE_ID.json)).
+
+**VERIFIED (sandbox):** a new capture returns `201`. Repeating it with the same `PayPal-Request-Id` returns `200` with the **same** capture ID and creates no second capture ([E5](../spike/results/E5-07-idempotency.json)).
 
 ### 5.5 Void
-`POST /v2/payments/authorizations/{authorizationId}/void`, empty body. Request ID `settle:<rentalId>:<seq>:void`. Expect `204` or `200` with representation (record which).
+`POST /v2/payments/authorizations/{authorizationId}/void`, empty body. Request ID `settle:<rentalId>:<seq>:void`. **VERIFIED (sandbox):** returns **`200` with the full authorization** (`status: VOIDED`) when `Prefer: return=representation` is sent ([E1](../spike/results/E1-05-void-1.json), [E3](../spike/results/E3-05-void-1.json)). After a final capture it returns `422 PREVIOUSLY_CAPTURED` ([E2](../spike/results/E2-05-void-1.json)).
 
 ### 5.6 Refund
 `POST /v2/payments/captures/{captureId}/refund`
@@ -163,6 +165,17 @@ Webhooks **confirm**; they do not drive settlement. The API response drives stat
 
 VERIFIED (doc): events from the Webhooks Simulator use webhook ID `WEBHOOK_ID` and cannot be verified via the postback endpoint. Use real sandbox transactions to test verification.
 
+**VERIFIED (sandbox), E7 (`spike/RESULTS.md` §E7):**
+- All 6 event names above were accepted at registration.
+- 11 real deliveries were received, covering `AUTHORIZATION.CREATED`, `AUTHORIZATION.VOIDED`, `CAPTURE.COMPLETED` and `CAPTURE.REFUNDED`. **All verified `SUCCESS`** with `webhook_event` sent as the parsed body.
+- Every event's `resource.custom_id` carries our `purchase_units[].custom_id`, so step 5 can map an event to its rental by `custom_id` alone.
+- Capture and refund resources also carry our `invoice_id`.
+- `supplementary_data.related_ids` gives `order_id`, plus `authorization_id` on captures.
+- **Delivery is delayed and can arrive out of order:**
+  - `VOIDED` arrived 30–66 s after the API call;
+  - `AUTHORIZATION.CREATED` sometimes arrived after `CAPTURE.COMPLETED`;
+  - so the timeline must order events by PayPal resource time, not arrival time.
+
 ## 8. Payment state machine (per rental)
 
 ```
@@ -179,7 +192,14 @@ any → ERROR_NEEDS_RECONCILE                           (unknown outcome after r
 
 ## 9. UI wording rules (generated from evidence)
 
-`src/lib/settlementCopy.ts` maps `(SETTLEMENT_MODE, observed statuses)` → user-facing text. Initial rules:
+`src/lib/settlementCopy.ts` maps `(SETTLEMENT_MODE, observed statuses)` → user-facing text.
+
+**Spike outcome (T-006).** Recommended mode: **`PARTIAL_CAPTURE_THEN_VOID`**.
+- Sandbox evidence confirms the statuses behind the "Void succeeded", "Mode A", "Mode B" and "Mode C" rows: E1 void → `VOIDED`; E2 auth → `CAPTURED` with void `PREVIOUSLY_CAPTURED`; E4 capture → `PARTIALLY_REFUNDED` with refund `COMPLETED`.
+- **E8 (buyer view) is still pending**, so the "released" upgrades below stay **off**. The evidence flag in code must default to `false`.
+- If Mode B were ever used, its copy must not suggest the remainder was voided. The API shows only `CAPTURED`, and a void is rejected.
+
+Rules:
 
 | Situation | Allowed wording | Forbidden wording |
 | --- | --- | --- |
@@ -226,9 +246,13 @@ Integration (opt-in, `npm run test:integration`, sandbox): create → (manual ap
 
 ## 13. Known uncertainties (resolve in M0)
 
-1. Whether partial capture of a PayPal-wallet authorization needs account enablement in sandbox.
+Status after the spike on 2026-10-27; details in `spike/RESULTS.md`.
+
+1. ~~Whether partial capture of a PayPal-wallet authorization needs account enablement in sandbox.~~ **Resolved:** no enablement was needed (E1, E2).
 2. Whether `final_capture:true` releases the remainder, and whether void is permitted afterwards.
-3. Whether void after `final_capture:false` returns the remainder to the buyer's available balance in the sandbox UI.
-4. Exact webhook event names and payload links to authorization/capture IDs.
-5. `experience_context` accepted values for `AUTHORIZE` orders.
-6. PayPal-Request-Id retention window.
+   - **Partly resolved:** void is **not** permitted (`PREVIOUSLY_CAPTURED`), and the auth reports `CAPTURED`.
+   - Whether the buyer sees the remainder released is **pending E8**.
+3. Whether void after `final_capture:false` returns the remainder to the buyer's available balance in the sandbox UI. **Pending E8.** The API confirms `VOIDED` (E1).
+4. ~~Exact webhook event names and payload links to authorization/capture IDs.~~ **Resolved:** all 6 names were accepted, and events link through `custom_id`, `invoice_id` and `related_ids` (E7).
+5. ~~`experience_context` accepted values for `AUTHORIZE` orders.~~ **Resolved:** the §5.1 values were accepted.
+6. PayPal-Request-Id retention window. **Open:** not documented on the capture reference and not tested. The app's own lock (§6.1) stays primary.
