@@ -147,3 +147,11 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Holdfast
+spike/results/
+eval/reports/*.json
+*.pem
+.vercel
+.DS_Store
+next-env.d.ts
