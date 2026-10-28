@@ -160,6 +160,8 @@ If E8 shows the $162 still held or pending after the void, the mode stays the sa
 
 Mode `PARTIAL_CAPTURE_FINAL` is **not** recommended. After a $38 final capture, PayPal reports the whole authorization as `CAPTURED`, and the remainder can no longer be voided (`PREVIOUSLY_CAPTURED`). That makes the remainder's fate unclear in the API.
 
+**Owner decision (2026-10-27): GO with `SETTLEMENT_MODE=PARTIAL_CAPTURE_THEN_VOID`.** E8 is still pending, so the "released" wording stays off.
+
 ## 5. Still uncertain
 
 1. **E8:** what the buyer sees for the voided remainder (E1), the final partial capture (E2), the full void (E3) and capture-then-refund (E4).
@@ -167,3 +169,62 @@ Mode `PARTIAL_CAPTURE_FINAL` is **not** recommended. After a $38 final capture, 
 3. **`PayPal-Request-Id` retention window:** not documented on the capture reference page, and not tested. The app's own lock (§6) is the primary guard anyway.
 4. **The honor period (3 days):** whether a capture after day 3 behaves differently. Not tested; demo rentals are 3 days or less.
 5. **The approval-page loop:** not investigated further; it doesn't affect the app flow.
+
+---
+
+# Vision feasibility check (T-007)
+
+**Run:** 2026-10-28T00:00Z on project `holdfast-demo-2026`, using live Vertex AI calls with prompt `hf-insp-v1`.
+**Inputs:** 5 owner photo pairs in `eval/spike-pairs/` (gitignored), each normalized as in AI_PIPELINE §3.
+**Recording:** [vision-check-20261028T000045Z](results/vision-check-20261028T000045Z.json)
+
+## Location finding
+
+- **Generation works only on the `global` endpoint.** `models.list` and `models.get` show `gemini-3.6/3.7/3.8-flash` in both `us-central1` and `global`. But generation in `us-central1` returned `404 NOT_FOUND` ("not found or your project does not have access"), for all 20 attempts of the first run ([vision-check-20261027T233733Z](results/vision-check-20261027T233733Z.json)).
+- Those rejected attempts used **0 tokens**.
+- The same calls on `global` succeeded.
+- **Required setting:** `VERTEX_LOCATION=global`.
+
+## Results (`--location global`, 11 of 20 approved calls used)
+
+| Pair | Truth (owner) | gemini-3.8-flash | gemini-3.7-flash |
+| --- | --- | --- | --- |
+| 1 | NEW_DAMAGE: ear cushion removed | ✅ 2× MISSING_PART (front and rear earcup), conf 0.98 | ✅ 2× MISSING_PART, conf 0.99 |
+| 2 | NEW_DAMAGE: outer rim of camera lens hood | ✅ CRACK | ✅ CRACK |
+| 3 | NEW_DAMAGE: front-right speaker grille | ✅ DENT | ✅ DENT |
+| 4 | NO_CHANGE: warm vs daylight, pre-existing scuff | ✅ no new findings, noChange 0.98 | ✅ no new findings, noChange 0.98 |
+| 5 | NO_CHANGE: different angle and reflections | ✅ no new findings, **but `usable:false, ANGLE_MISMATCH`**, noChange 0.5 | ✅ same |
+
+| Metric | gemini-3.8-flash | gemini-3.7-flash |
+| --- | --- | --- |
+| Correct (gate needs ≥ 4/5) | 5/5 | 5/5 |
+| No-change pairs clean (gate needs 2/2) | 2/2 | 2/2 |
+| Schema-valid after retry (gate needs 100%) | 5/5 | 5/5 |
+| Valid on first try | 4/5. The one failure was a **504 timeout** at 30 s, not invalid JSON. | **5/5** |
+| Latency p50 | 10.4 s | **5.5 s** |
+| Tokens (5 successful calls) | in 15,965 / out 3,814, thinking included | in 15,965 / out **2,613** |
+| Estimated cost at $0.75 / $3.75 per 1M tokens | ≈ $0.026 | ≈ **$0.022** |
+| **Gate** | **PASS** | **PASS** |
+
+**Total spent for T-007 ≈ $0.05** (estimated from Vertex token counts).
+- The timed-out 3.8 call may also be billed for its input, at most about $0.003.
+- Billed cost appears in the Cloud Billing console after a delay.
+- Pricing comes from the Vertex pricing page via search: 3.6/3.7 Flash at $0.75 / $3.75 per 1M tokens (introductory, through 2026-12-31). The 3.8 rate is from a third-party listing only.
+
+## Recommendation: `GEMINI_MODEL=gemini-3.7-flash` with `VERTEX_LOCATION=global`
+
+It matches 3.8 on accuracy and is better on everything else:
+- valid on the first try every time;
+- about 2× faster;
+- fewer output tokens;
+- officially confirmed pricing;
+- no timeouts.
+
+## Findings that feed later tasks
+
+1. **The angle-mismatch "clean" pair would not show as clean in the app.** In pair 5, both models correctly reported no damage but rejected the photo as an angle mismatch. Under §6.1 that angle is `INCOMPLETE` (retake), not `NO_NEW_DAMAGE`. Guided capture (T-031) must keep angles consistent. T-033's acceptance check ("unchanged item → `NO_NEW_DAMAGE`") depends on it.
+2. **Pair 1 is correct, not a double count.** The owner confirmed on 2026-10-28 that **both** ear cushions were removed, and both models reported exactly the two missing cushions (front and rear earcup), each at confidence ≥ 0.98. The duplicate-finding risk is still covered by staff review and the P2 hint (T-091).
+3. **Thinking tokens** make up most of the output tokens (235–948 per call), so they drive cost. Consider capping them with `thinkingConfig` in T-032 if latency or cost matter.
+4. Truth labels for pairs 2 and 3 had no damage type, so type accuracy wasn't scored. Pair 1's type matched.
+
+**Status:** both gates pass (T-006 PayPal, T-007 vision). **STOP for owner go/no-go.**

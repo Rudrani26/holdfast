@@ -1,13 +1,8 @@
 import { z } from "zod";
+import { SETTLEMENT_MODES } from "@/domain/types";
 
 // Variables from docs/ARCHITECTURE.md §10. Only PAYPAL_ENV is required at this stage;
 // the rest are validated when present and become required in the tasks that use them.
-
-export const SETTLEMENT_MODES = [
-  "PARTIAL_CAPTURE_THEN_VOID",
-  "PARTIAL_CAPTURE_FINAL",
-  "CAPTURE_THEN_REFUND",
-] as const;
 
 export const AI_MODES = ["live", "replay"] as const;
 

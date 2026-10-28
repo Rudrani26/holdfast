@@ -33,6 +33,36 @@ Nothing here is mocked. Every script makes live sandbox calls and records the re
 - On later runs it updates that webhook's URL in place, so the webhook ID never changes.
 - `--write-env` updates only the `PAYPAL_WEBHOOK_ID` line in `.env.local`.
 
+## Vision check (T-007)
+
+`spike/vision-check.ts` runs the RETURN inspection prompt (`src/server/ai/prompts.ts`) on 5 owner photo pairs with up to 2 candidate Gemini models on **Vertex AI**. These are live calls, billed to the GCP Free Trial credits.
+- There is a hard cap of **20 model calls** per run; retries count toward it.
+- Listing the available models doesn't count.
+
+It must run with `--conditions=react-server`, because the AI modules import `server-only`:
+
+```sh
+npx tsx --conditions=react-server spike/vision-check.ts --list
+npx tsx --conditions=react-server spike/vision-check.ts --models <model-a>,<model-b>
+```
+
+**[OWNER] prerequisites:**
+1. **Photo pairs** at `eval/spike-pairs/<n>/before.jpg`, `after.jpg` and `truth.txt`, for n = 1…5.
+   - `truth.txt` is one line: `NO_CHANGE <note>` or `NEW_DAMAGE[:TYPE] <note>`, for example `NEW_DAMAGE:MISSING_PART left ear cushion removed`.
+   - At least 2 pairs must be real changes, and at least 2 real **no-change** pairs, with a lighting or angle difference between the two photos.
+   - Use only items you own, and make only non-destructive changes (`docs/AI_PIPELINE.md` §10.1).
+2. **`.env.local`:** set `GCP_PROJECT_ID=<your project id>` and `VERTEX_LOCATION=us-central1`.
+3. **Application Default Credentials:** run `gcloud auth application-default login` once.
+4. **Approve and enable the Vertex AI API** on the project (`docs/DEPLOYMENT.md` §3):
+   `gcloud services enable aiplatform.googleapis.com --project <your project id>`
+
+**What the gate checks:** for at least one model,
+- 4 or more of the 5 pairs are correct;
+- **both** no-change pairs come back with no new findings;
+- every response matches the schema after at most one retry.
+
+A model that flags damage on an unchanged item fails.
+
 ## Webhooks (E7)
 
 ### What the listener does

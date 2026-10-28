@@ -6,6 +6,11 @@ The AI proposes; people decide; the price list prices; PayPal settles. This docu
 
 - **Inspection model:** a Gemini Flash-class multimodal model on **Vertex AI** (billed to the GCP Free Trial credits). As of Oct 27, 2026, Vertex's pricing page lists Gemini 3.6/3.7/3.8 Flash with introductory pricing through Dec 31, 2026. **Pin the exact model ID in T-007** after testing 2 candidates on the 5-pair check; record it in `.env.example` comments and here.
 - Selection criteria, in order: schema-valid JSON rate; correct new-vs-pre-existing calls on the 5 pairs; latency; cost.
+- **Pinned (T-007, 2026-10-28): `gemini-3.7-flash` on `VERTEX_LOCATION=global`.**
+  - Both candidates passed the gate at 5/5, with both no-change pairs clean.
+  - 3.7 won on validity on the first try (5/5 vs 4/5, because of a 504 timeout), p50 latency (5.5 s vs 10.4 s) and output tokens.
+  - Generation of 3.x Flash returned `404` on `us-central1`, even though the model is listed there.
+  - Details: `spike/RESULTS.md`, vision section.
 - **Image-edit model (evaluation data generation only):** a Gemini image generation/editing model on Vertex (Vertex docs show `gemini-2.5-flash-image` supports editing; newer Flash Image models may be available). Pin in T-051.
 - Do **not** use the AI Studio Gemini API key path: costs there may not be covered by the trial credit (UNVERIFIED), and the owner chose Vertex.
 

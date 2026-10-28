@@ -155,3 +155,6 @@ eval/reports/*.json
 .vercel
 .DS_Store
 next-env.d.ts
+
+# Owner's private photo pairs for the T-007 vision check (not committed)
+eval/spike-pairs/

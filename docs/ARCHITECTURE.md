@@ -52,7 +52,7 @@ flowchart LR
 
 ## 3. Data model (Firestore)
 
-All collections are prefixed with `FIRESTORE_COLLECTION_PREFIX` (e.g. `dev_` locally, empty in the demo deployment). Money is integer cents. Timestamps are Firestore `Timestamp`.
+All collections are prefixed with `FIRESTORE_COLLECTION_PREFIX` (e.g. `dev_` locally, empty in the demo deployment). Money is integer cents. Timestamps are stored as **ISO-8601 UTC strings** (changed in T-014 from Firestore `Timestamp`). This keeps Firestore types out of `src/domain`, the strings sort correctly, and the repo stores domain objects as-is. The `Timestamp` fields below are therefore `string` in code (`IsoTime`).
 
 ### `items/{itemId}`
 ```ts
