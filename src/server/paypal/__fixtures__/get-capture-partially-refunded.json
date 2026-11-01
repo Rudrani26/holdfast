@@ -1,0 +1,67 @@
+{
+  "_note": "Recorded PayPal Sandbox response (E4 GET capture after refund, 2026-10-27). Redacted; personal fields replaced with placeholders.",
+  "status": 200,
+  "body": {
+    "id": "2M190931H46376540",
+    "amount": {
+      "currency_code": "USD",
+      "value": "200.00"
+    },
+    "final_capture": true,
+    "seller_protection": {
+      "status": "ELIGIBLE",
+      "dispute_categories": [
+        "ITEM_NOT_RECEIVED",
+        "UNAUTHORIZED_TRANSACTION"
+      ]
+    },
+    "disbursement_mode": "INSTANT",
+    "seller_receivable_breakdown": {
+      "gross_amount": {
+        "currency_code": "USD",
+        "value": "200.00"
+      },
+      "paypal_fee": {
+        "currency_code": "USD",
+        "value": "7.47"
+      },
+      "net_amount": {
+        "currency_code": "USD",
+        "value": "192.53"
+      }
+    },
+    "invoice_id": "HF-E4-20261027T223028Z-1",
+    "custom_id": "spike-E4-20261027T223028Z",
+    "status": "PARTIALLY_REFUNDED",
+    "supplementary_data": {
+      "related_ids": {
+        "order_id": "78N395224A2033523",
+        "authorization_id": "4TW63321HF319971A"
+      }
+    },
+    "payee": {
+      "email_address": "sandbox-user@example.com",
+      "merchant_id": "SANDBOXMERCHANTID"
+    },
+    "create_time": "2026-10-27T22:47:03Z",
+    "update_time": "2026-10-27T22:47:07Z",
+    "links": [
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/captures/2M190931H46376540",
+        "rel": "self",
+        "method": "GET"
+      },
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/captures/2M190931H46376540/refund",
+        "rel": "refund",
+        "method": "POST"
+      },
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/4TW63321HF319971A",
+        "rel": "up",
+        "method": "GET"
+      }
+    ]
+  },
+  "debugId": "f839297e7dbfc"
+}

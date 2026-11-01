@@ -1,0 +1,30 @@
+{
+  "_note": "Recorded PayPal Sandbox response (E1 POST void, 2026-10-27). Redacted; personal fields replaced with placeholders.",
+  "status": 200,
+  "body": {
+    "id": "5TN13229TB9978039",
+    "status": "VOIDED",
+    "amount": {
+      "currency_code": "USD",
+      "value": "200.00"
+    },
+    "seller_protection": {
+      "status": "ELIGIBLE",
+      "dispute_categories": [
+        "ITEM_NOT_RECEIVED",
+        "UNAUTHORIZED_TRANSACTION"
+      ]
+    },
+    "expiration_time": "2026-11-25T14:41:33-08:00",
+    "create_time": "2026-10-27T15:41:33-07:00",
+    "update_time": "2026-10-27T15:41:49-07:00",
+    "links": [
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/5TN13229TB9978039",
+        "rel": "self",
+        "method": "GET"
+      }
+    ]
+  },
+  "debugId": "ca51535d7dc48"
+}

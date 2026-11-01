@@ -1,0 +1,482 @@
+[
+  {
+    "scene": "j1-book",
+    "take": 1,
+    "file": "video/out/raw/j1-book.take1.mp4",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 9.4,
+        "label": "booking form"
+      },
+      {
+        "t": 19.9,
+        "label": "paypal button"
+      },
+      {
+        "t": 26.8,
+        "label": "paypal popup (cut before password)"
+      },
+      {
+        "t": 26.8,
+        "label": "end"
+      }
+    ],
+    "ids": {},
+    "note": "DELETED: the kiosk window was behind the owner's own browser for the whole take, so it recorded personal desktop content. Not usable; replaced by j1-form."
+  },
+  {
+    "scene": "j1-book-approve",
+    "take": 1,
+    "file": "video/out/raw/j1-book-approve.take1.mp4",
+    "rentalId": "r_e4ea36b40d4d06895f9f",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 19.1,
+        "label": "confirmation"
+      },
+      {
+        "t": 25.4,
+        "label": "end"
+      }
+    ],
+    "ids": {
+      "orders": [
+        "5UK7089516358800F"
+      ],
+      "authorizations": [
+        "22X40097DE206973U"
+      ],
+      "captures": [],
+      "webhookEvents": []
+    },
+    "note": "Starts during the owner's PayPal sign-in (masked password; OS taskbar visible): use only from the PayPal \"Pay with\" wallet page onward, with the taskbar strip masked, then the real J1 confirmation."
+  },
+  {
+    "scene": "j1-checkout",
+    "take": 1,
+    "file": "video/out/raw/j1-checkout.take1.mp4",
+    "rentalId": "r_e4ea36b40d4d06895f9f",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 40,
+        "label": "6 photos uploaded"
+      },
+      {
+        "t": 41,
+        "label": "click run baseline (wait starts)"
+      },
+      {
+        "t": 56.9,
+        "label": "baseline result visible (wait ends)"
+      },
+      {
+        "t": 62.3,
+        "label": "end"
+      }
+    ],
+    "ids": {}
+  },
+  {
+    "scene": "j1-ack",
+    "take": 1,
+    "file": "video/out/raw/j1-ack.take1.mp4",
+    "rentalId": "r_e4ea36b40d4d06895f9f",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 6.5,
+        "label": "acknowledged"
+      },
+      {
+        "t": 8.5,
+        "label": "end"
+      }
+    ],
+    "ids": {},
+    "note": "Phone: crop x0 y0 488Ãƒâ€”1055"
+  },
+  {
+    "scene": "j1-return",
+    "take": 1,
+    "file": "video/out/raw/j1-return.take1.mp4",
+    "rentalId": "r_e4ea36b40d4d06895f9f",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 35.4,
+        "label": "6 return photos uploaded"
+      },
+      {
+        "t": 36.3,
+        "label": "click run return (wait starts)"
+      },
+      {
+        "t": 64.2,
+        "label": "return result visible (wait ends)"
+      },
+      {
+        "t": 70.8,
+        "label": "pre-existing expanded"
+      },
+      {
+        "t": 75.8,
+        "label": "price chip"
+      },
+      {
+        "t": 77.8,
+        "label": "staff press: Confirm $76.00 (2 lines)"
+      },
+      {
+        "t": 82.2,
+        "label": "end"
+      }
+    ],
+    "ids": {}
+  },
+  {
+    "scene": "j1-accept",
+    "take": 1,
+    "file": "video/out/raw/j1-accept.take1.mp4",
+    "rentalId": "r_e4ea36b40d4d06895f9f",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 13.7,
+        "label": "renter accepted"
+      },
+      {
+        "t": 16.2,
+        "label": "end"
+      }
+    ],
+    "ids": {},
+    "note": "Phone: crop x0 y0 488Ãƒâ€”1055"
+  },
+  {
+    "scene": "j1-settle",
+    "take": 1,
+    "file": "video/out/raw/j1-settle.take1.mp4",
+    "rentalId": "r_e4ea36b40d4d06895f9f",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 1,
+        "label": "press settle"
+      },
+      {
+        "t": 6.3,
+        "label": "receipt visible"
+      },
+      {
+        "t": 24.7,
+        "label": "PayPal-confirmed badges visible"
+      },
+      {
+        "t": 28.7,
+        "label": "end"
+      }
+    ],
+    "ids": {
+      "orders": [
+        "5UK7089516358800F"
+      ],
+      "authorizations": [
+        "22X40097DE206973U",
+        "3AK885510K404981V"
+      ],
+      "captures": [
+        "3AK885510K404981V"
+      ],
+      "webhookEvents": [
+        "WH-2340001800281321K-5PP46019SV010294C",
+        "WH-9FK58463D4251682K-4E976668U8177663V",
+        "WH-0FA27087VH250763L-0CM53756NE434301P"
+      ]
+    }
+  },
+  {
+    "scene": "j2-return",
+    "take": 1,
+    "file": "video/out/raw/j2-return.take1.mp4",
+    "rentalId": "r_76b9febc2c50d4c4744b",
+    "marks": [],
+    "ids": {},
+    "note": "Uploads, live return inspection and the NO_NEW_DAMAGE result (104 s). The script stopped before Confirm (it did not recognise the clean-return timeline wording); marks were not saved. Confirm is in scene j2-confirm."
+  },
+  {
+    "scene": "j2-confirm",
+    "take": 1,
+    "file": "video/out/raw/j2-confirm.take1.mp4",
+    "rentalId": "r_76b9febc2c50d4c4744b",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 0,
+        "label": "verdict: No new damage detected"
+      },
+      {
+        "t": 6.4,
+        "label": "staff press: Confirm $0"
+      },
+      {
+        "t": 11,
+        "label": "end"
+      }
+    ],
+    "ids": {}
+  },
+  {
+    "scene": "j2-ok",
+    "take": 1,
+    "file": "video/out/raw/j2-ok.take1.mp4",
+    "rentalId": "r_76b9febc2c50d4c4744b",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 4,
+        "label": "renter: looks right"
+      },
+      {
+        "t": 6.5,
+        "label": "end"
+      }
+    ],
+    "ids": {},
+    "note": "Phone: crop x0 y0 488Ã—1055"
+  },
+  {
+    "scene": "j2-settle",
+    "take": 1,
+    "file": "video/out/raw/j2-settle.take1.mp4",
+    "rentalId": "r_76b9febc2c50d4c4744b",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 0.8,
+        "label": "press settle"
+      },
+      {
+        "t": 4.1,
+        "label": "receipt visible"
+      },
+      {
+        "t": 10.2,
+        "label": "PayPal-confirmed badges visible"
+      },
+      {
+        "t": 14.2,
+        "label": "end"
+      }
+    ],
+    "ids": {
+      "orders": [
+        "48J27626N1260072K"
+      ],
+      "authorizations": [
+        "7CL065587Y652090U"
+      ],
+      "captures": [],
+      "webhookEvents": [
+        "WH-9GV68671159227602-43547732U6238854D",
+        "WH-10G910584B1912809-06P43368JE4580207"
+      ]
+    }
+  },
+  {
+    "scene": "j3-return",
+    "take": 1,
+    "file": "video/out/raw/j3-return.take1.mp4",
+    "rentalId": "r_34cdf02804cd6b4fb848",
+    "marks": [],
+    "ids": {},
+    "note": "Uploads, live return inspection (Gemini proposed 'Small grille dent', $15 from the price list), staff Confirm $15.00, ends on 'Waiting for the renter' (107 s). Script stopped waiting for a transient message; marks not saved."
+  },
+  {
+    "scene": "j3-contest",
+    "take": 1,
+    "file": "video/out/raw/j3-contest.take1.mp4",
+    "rentalId": "r_34cdf02804cd6b4fb848",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 16.6,
+        "label": "renter contested"
+      },
+      {
+        "t": 19.2,
+        "label": "end"
+      }
+    ],
+    "ids": {},
+    "note": "Phone: crop x0 y0 488×1055"
+  },
+  {
+    "scene": "j3-review",
+    "take": 1,
+    "file": "video/out/raw/j3-review.take1.mp4",
+    "rentalId": "r_34cdf02804cd6b4fb848",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 4.9,
+        "label": "line excluded"
+      },
+      {
+        "t": 4.9,
+        "label": "staff press: Confirm $0"
+      },
+      {
+        "t": 9.5,
+        "label": "end"
+      }
+    ],
+    "ids": {}
+  },
+  {
+    "scene": "j3-ok",
+    "take": 1,
+    "file": "video/out/raw/j3-ok.take1.mp4",
+    "rentalId": "r_34cdf02804cd6b4fb848",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 3,
+        "label": "renter: looks right"
+      },
+      {
+        "t": 5,
+        "label": "end"
+      }
+    ],
+    "ids": {},
+    "note": "Phone: crop x0 y0 488×1055"
+  },
+  {
+    "scene": "j3-settle",
+    "take": 1,
+    "file": "video/out/raw/j3-settle.take1.mp4",
+    "rentalId": "r_34cdf02804cd6b4fb848",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 0.9,
+        "label": "press settle"
+      },
+      {
+        "t": 3.8,
+        "label": "receipt visible"
+      },
+      {
+        "t": 9.9,
+        "label": "PayPal-confirmed badges visible"
+      },
+      {
+        "t": 14,
+        "label": "end"
+      }
+    ],
+    "ids": {
+      "orders": [
+        "6EP466526X925102S"
+      ],
+      "authorizations": [
+        "3RE78577G3579781P"
+      ],
+      "captures": [],
+      "webhookEvents": [
+        "WH-9YN33173KR753843X-5V827982L04695636",
+        "WH-4G740289AK5372503-371952988A313605S"
+      ]
+    }
+  },
+  {
+    "scene": "trust",
+    "take": 1,
+    "file": "video/out/raw/trust.take1.mp4",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 7.9,
+        "label": "eval card"
+      },
+      {
+        "t": 17.7,
+        "label": "end"
+      }
+    ],
+    "ids": {}
+  },
+  {
+    "scene": "j1-form",
+    "take": 1,
+    "file": "video/out/raw/j1-form.take1.mp4",
+    "marks": [
+      {
+        "t": 0,
+        "label": "start"
+      },
+      {
+        "t": 8.8,
+        "label": "booking form"
+      },
+      {
+        "t": 17.2,
+        "label": "paypal button visible"
+      },
+      {
+        "t": 19.6,
+        "label": "end"
+      }
+    ],
+    "ids": {},
+    "note": "Retake of the booking form (unpaid draft, not the J1 rental). Edit hard-cuts with a label to J1's real PayPal popup and confirmation in j1-book-approve."
+  }
+]

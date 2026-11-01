@@ -1,0 +1,22 @@
+{
+  "_note": "Recorded PayPal Sandbox response (E2 void after final capture, 2026-10-27). Redacted; personal fields replaced with placeholders.",
+  "status": 422,
+  "body": {
+    "name": "UNPROCESSABLE_ENTITY",
+    "message": "The requested action could not be performed, semantically incorrect, or failed business validation.",
+    "debug_id": "ca515367a9fab",
+    "details": [
+      {
+        "issue": "PREVIOUSLY_CAPTURED",
+        "description": "Authorization has been previously captured and hence cannot be voided."
+      }
+    ],
+    "links": [
+      {
+        "href": "https://developer.paypal.com/docs/api/payments/v2/#error-PREVIOUSLY_CAPTURED",
+        "rel": "information_link"
+      }
+    ]
+  },
+  "debugId": "ca515367a9fab"
+}

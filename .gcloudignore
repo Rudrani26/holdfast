@@ -1,0 +1,24 @@
+# What `gcloud run deploy --source .` must NOT upload to Cloud Build (mirrors .dockerignore).
+.gcloudignore
+.env
+.env.*
+!.env.example
+*.pem
+node_modules/
+.next/
+.git/
+.gitignore
+.vercel/
+coverage/
+eval/spike-pairs/
+eval/clean-return/
+eval/images/
+eval/reports/
+spike/results/
+# Local tooling and editor state (every root dot-directory)
+/.*/
+*.log
+
+# Demo video: private photos, signed-in browser profile, renders
+demo-assets/
+video/

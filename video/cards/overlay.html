@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Holdfast footage overlay</title>
+<link rel="stylesheet" href="cards.css">
+<style>
+  body { background: transparent; }
+  body.with-bg { background: var(--ink); }
+  #bg { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+  /* Staff view left, renter phone right */
+  body.split #bg { inset: 60px auto auto 60px; width: 1340px; height: 754px; border-radius: 14px; box-shadow: 0 24px 60px rgb(0 0 0 / 0.45); }
+  .phone { position: absolute; right: 110px; top: 50%; transform: translateY(-50%); width: 410px; padding: 12px; border-radius: 52px; background: #0b0f0e; box-shadow: 0 24px 60px rgb(0 0 0 / 0.5); }
+  .phone img { display: block; width: 386px; border-radius: 40px; }
+  .phone-label { position: absolute; right: 110px; width: 410px; top: 34px; text-align: center; color: var(--muted); font-size: 24px; }
+  .staff-label { position: absolute; left: 60px; top: 836px; color: var(--muted); font-size: 24px; }
+
+  .callout { position: absolute; border: 5px solid var(--hold); border-radius: 16px; box-shadow: 0 0 0 9999px rgb(15 31 29 / 0.28); }
+  .callout + .callout { box-shadow: none; }
+  .callout span { position: absolute; left: -5px; top: -54px; white-space: nowrap; background: var(--hold); color: #2b1e00; font-weight: 700; font-size: 26px; padding: 8px 16px; border-radius: 10px; }
+  .callout.below span { top: auto; bottom: -54px; }
+  /* Label in the margin beside the box, so it never covers app content */
+  .callout.right span { left: calc(100% + 18px); top: -5px; white-space: normal; width: max-content; max-width: 236px; line-height: 1.25; }
+
+  .lower { position: absolute; left: 60px; bottom: 60px; display: flex; gap: 22px; align-items: stretch; background: rgb(15 31 29 / 0.94); color: var(--paper); padding: 22px 34px 22px 22px; border-radius: 14px; max-width: 1180px; }
+  .lower .bar { width: 8px; border-radius: 4px; background: var(--hold); }
+  .lower .kicker { font-size: 24px; color: var(--muted); }
+  .lower .title { font-size: 40px; font-weight: 700; line-height: 1.15; }
+  .cut { position: absolute; left: 60px; top: 60px; background: rgb(15 31 29 / 0.9); color: var(--paper); font-size: 24px; font-weight: 600; padding: 8px 16px; border-radius: 10px; }
+</style>
+</head>
+<body>
+<script>
+  // Spec in the hash as JSON: { bg, split, phone, callouts:[{x,y,w,h,label,below,right}], lower:{kicker,title}, cut }
+  // All coordinates are in the 1920×1080 frame. Overlays only annotate; app pixels underneath are never altered.
+  const spec = JSON.parse(decodeURIComponent(location.hash.slice(1) || "{}"));
+  const add = (html) => document.body.insertAdjacentHTML("beforeend", html);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  if (spec.bg) { document.body.classList.add("with-bg"); add(`<img id="bg" src="${esc(spec.bg)}" alt="">`); }
+  if (spec.split) {
+    document.body.classList.add("split");
+    add(`<p class="staff-label">Staff workspace</p>`);
+    add(`<div class="phone"><img src="${esc(spec.phone)}" alt=""></div><p class="phone-label">Renter's phone</p>`);
+  }
+  for (const c of spec.callouts ?? []) add(`<div class="callout${c.below ? " below" : ""}${c.right ? " right" : ""}" style="left:${c.x}px;top:${c.y}px;width:${c.w}px;height:${c.h}px"><span>${esc(c.label)}</span></div>`);
+  if (spec.lower) add(`<div class="lower"><span class="bar"></span><div><div class="kicker">${esc(spec.lower.kicker)}</div><div class="title display">${esc(spec.lower.title)}</div></div></div>`);
+  if (spec.cut) add(`<div class="cut">${esc(spec.cut)}</div>`);
+  if (spec.bg || spec.split) add(`<div class="sandbox-corner">PayPal Sandbox · no real money</div>`);
+</script>
+</body>
+</html>

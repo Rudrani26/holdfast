@@ -1,8 +1,8 @@
 # TASKS.md — Holdfast implementation plan
 
 Rules for every task:
-- Do exactly one task per session unless the owner says otherwise; then deliver the milestone report from `CLAUDE.md` §10 and **stop**.
-- No Git write operations, ever (see `CLAUDE.md` §3). Suggest a commit message; the owner commits.
+- Do exactly one task per session unless the owner says otherwise; then deliver a milestone report (files, what works, tests run, risks, dependencies, cost-relevant actions, suggested commit message, next task) and **stop**.
+- No Git write operations, ever. Suggest a commit message; the owner commits.
 - No cloud resource creation, API enablement, deployment or billing change without explicit owner approval for that action.
 - Before reporting done, run: `npm run typecheck && npm run lint && npm test` plus the task's own commands. Report real results.
 
@@ -197,7 +197,7 @@ Owner-only steps are marked **[OWNER]**.
 - **Files:** `eval/manifest.schema.ts`, `eval/README.md`, `scripts/eval-validate.ts`.
 - **Acceptance:** manifest validates; every case has provenance; WEB cases have license fields.
 
-### T-051 — Hybrid/synthetic generation script (P0)
+### T-051 — Hybrid/synthetic generation script (P0) — **SKIPPED by owner decision (2026-10-28): no image-edit model.** The eval set is REAL (plus openly licensed WEB) only; HYBRID/SYNTHETIC rows in `AI_PIPELINE.md` §10.2 are not pursued.
 - **Depends:** **[OWNER]** approves image-edit model usage (credits). **Files:** `scripts/eval-generate.ts`.
 - **Instructions:** input: real `before.jpg` + damage spec (type, severity, location words); call the pinned image-edit model; save `after.jpg`, provenance (model, prompt, date); hard cap 60 images per run total; `humanVerified:false` until the owner reviews.
 - **Acceptance:** generates N requested images; prints estimated cost; never exceeds cap.

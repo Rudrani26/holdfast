@@ -164,7 +164,7 @@ E6 reuses E5's authorization, which still has a remaining amount because E5 capt
 1. **E7:** wait a minute or two, then stop the listener (Ctrl+C) and the tunnel.
    - Check `spike/results/webhook-*.json` for `verification.outcome`.
    - Note which event types arrived. Section 13 uncertainty #4 is about exactly this.
-2. Tell Claude the runs are done, and pass on your E8 notes and the account-settings notes. T-006 turns the recorded JSON into `spike/RESULTS.md` and the `SETTLEMENT_MODE` recommendation.
+2. Report that the runs are done, and pass on your E8 notes and the account-settings notes. T-006 turns the recorded JSON into `spike/RESULTS.md` and the `SETTLEMENT_MODE` recommendation.
 
 ## If something goes wrong
 

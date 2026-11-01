@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { SETTLEMENT_MODES, type SettlementMode } from "@/domain/types";
-import { authorizedCopy, CAPTURE_PENDING_COPY, RELEASE_EVIDENCE, settledCopy } from "./settlementCopy";
+import { authorizedCopy, CAPTURE_PENDING_COPY, plannedCopy, RELEASE_EVIDENCE, settledCopy } from "./settlementCopy";
 
 const H = 20000;
 const proven: Record<SettlementMode, boolean> = {
@@ -80,5 +80,27 @@ describe("wording rules (PAYPAL_INTEGRATION.md §9)", () => {
     expect(authorizedCopy(H)).toBe("$200.00 deposit authorized (hold, not a charge)");
     expect(authorizedCopy(H)).not.toMatch(/charged|paid/i);
     expect(CAPTURE_PENDING_COPY).not.toMatch(/complete/i);
+  });
+});
+
+describe("plannedCopy (future tense, from the planner)", () => {
+  it.each([
+    ["PARTIAL_CAPTURE_THEN_VOID", 3800, "The shop will capture $38.00, then void the rest of the $200.00 authorization."],
+    ["PARTIAL_CAPTURE_THEN_VOID", 0, "The shop will void the $200.00 deposit authorization (no charge)."],
+    ["PARTIAL_CAPTURE_THEN_VOID", 20000, "The shop will capture $200.00."],
+    ["PARTIAL_CAPTURE_FINAL", 3800, "The shop will capture $38.00 as a final capture."],
+    ["CAPTURE_THEN_REFUND", 3800, "The shop will capture $200.00, then refund $162.00."],
+  ] as const)("%s, D=%i", (mode, d, text) => {
+    expect(plannedCopy(mode, 20000, d)).toBe(text);
+  });
+
+  it("never says released, and never calls a void a refund", () => {
+    for (const mode of ["PARTIAL_CAPTURE_THEN_VOID", "PARTIAL_CAPTURE_FINAL", "CAPTURE_THEN_REFUND"] as const) {
+      for (const d of [0, 3800, 20000]) {
+        const t = plannedCopy(mode, 20000, d);
+        expect(t).not.toMatch(/release/i);
+        if (t.includes("void")) expect(t).not.toMatch(/refund/i);
+      }
+    }
   });
 });

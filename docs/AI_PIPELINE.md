@@ -109,6 +109,7 @@ A trustworthy inspector must be able to say "nothing changed" as confidently as 
 
 Rules:
 - The verdict is computed by code from model outputs, never asked of the model as free text, and never shown if any angle is unusable.
+- Overlap resolved in T-033: a low-confidence new note (< 0.50) satisfies both the `NO_NEW_DAMAGE` and the `NO_CHARGES_PROPOSED_REVIEW` conditions as written. `src/server/ai/verdict.ts` picks `NO_CHARGES_PROPOSED_REVIEW` (conservative: "nothing changed" is only claimed with no notes at all).
 - `NO_NEW_DAMAGE` still requires staff confirmation ("Confirm $0") and the renter's one-tap acknowledgement; it does not bypass the human gates.
 - The `0.80` threshold is an initial value, tuned on the clean-return cases in §10 and recorded here.
 - Prompt reinforcement: the system instruction states that returning empty findings with high `noChangeConfidence` is the expected, correct answer for an unchanged item, and that reporting lighting, angle, shadow, reflection, dust or repositioned straps/cables as damage is an error.

@@ -1,0 +1,56 @@
+{
+  "_note": "Recorded PayPal Sandbox response (E5 repeat capture with the same PayPal-Request-Id, 2026-10-27). Redacted; personal fields replaced with placeholders.",
+  "status": 200,
+  "body": {
+    "id": "26F96310G2864510S",
+    "amount": {
+      "currency_code": "USD",
+      "value": "38.00"
+    },
+    "final_capture": false,
+    "seller_protection": {
+      "status": "ELIGIBLE",
+      "dispute_categories": [
+        "ITEM_NOT_RECEIVED",
+        "UNAUTHORIZED_TRANSACTION"
+      ]
+    },
+    "seller_receivable_breakdown": {
+      "gross_amount": {
+        "currency_code": "USD",
+        "value": "38.00"
+      },
+      "paypal_fee": {
+        "currency_code": "USD",
+        "value": "1.82"
+      },
+      "net_amount": {
+        "currency_code": "USD",
+        "value": "36.18"
+      },
+      "exchange_rate": {}
+    },
+    "invoice_id": "HF-E5-20261027T224719Z-idem",
+    "custom_id": "spike-E5-20261027T224719Z",
+    "status": "COMPLETED",
+    "create_time": "2026-10-27T22:48:24Z",
+    "update_time": "2026-10-27T22:48:24Z",
+    "links": [
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/captures/26F96310G2864510S",
+        "rel": "self",
+        "method": "GET"
+      },
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/captures/26F96310G2864510S/refund",
+        "rel": "refund",
+        "method": "POST"
+      },
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/662160357U220583Y",
+        "rel": "up",
+        "method": "GET"
+      }
+    ]
+  }
+}

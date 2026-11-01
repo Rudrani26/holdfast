@@ -12,7 +12,7 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["src/**/*.test.ts", "spike/**/*.test.ts", "scripts/**/*.test.ts"],
+    include: ["src/**/*.test.ts", "spike/**/*.test.ts", "scripts/**/*.test.ts", "eval/**/*.test.ts"],
     exclude: ["**/*.integration.test.ts", "node_modules/**"],
   },
 });

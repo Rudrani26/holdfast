@@ -4,6 +4,7 @@
  * effect was proven (E8 buyer view). Wording must match what PayPal actually returned.
  */
 import type { Cents, SettlementMode } from "@/domain/types";
+import { plan } from "@/domain/settlementPlanner";
 import { formatUsd } from "./money";
 
 /**
@@ -63,4 +64,23 @@ export function settledCopy({
     case "CAPTURE_THEN_REFUND":
       return `${formatUsd(depositCents)} captured · ${formatUsd(remainder)} refunded`;
   }
+}
+
+/**
+ * Before settlement: what the shop WILL do, from the planner's operations (future tense). Same rules:
+ * a void is never a refund, and nothing is "released".
+ */
+export function plannedCopy(mode: SettlementMode, depositCents: Cents, deductionCents: Cents): string {
+  const ops = plan(mode, depositCents, deductionCents);
+  const parts = ops.map((op) => {
+    switch (op.op) {
+      case "CAPTURE":
+        return `capture ${formatUsd(op.amountCents)}${op.finalCapture && op.amountCents < depositCents ? " as a final capture" : ""}`;
+      case "VOID":
+        return ops.length === 1 ? `void the ${formatUsd(depositCents)} deposit authorization (no charge)` : `void the rest of the ${formatUsd(depositCents)} authorization`;
+      case "REFUND":
+        return `refund ${formatUsd(op.amountCents)}`;
+    }
+  });
+  return `The shop will ${parts.join(", then ")}.`;
 }

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Holdfast phone composite background</title>
+<link rel="stylesheet" href="cards.css">
+<style>
+  /* Staff view (a still of the real staff page) left; phone bezel right. The phone video is overlaid into
+     the screen hole at x=1412 y=122, 386×835 (see video/build/edit.ts PHONE_BOX). */
+  #staff { position: absolute; left: 60px; top: 120px; width: 1300px; height: 731px; object-fit: cover; object-position: top; border-radius: 14px; box-shadow: 0 24px 60px rgb(0 0 0 / 0.45); }
+  .label { position: absolute; color: var(--muted); font-size: 24px; }
+  .bezel { position: absolute; left: 1400px; top: 110px; width: 410px; height: 859px; border-radius: 48px; background: #0b0f0e; box-shadow: 0 24px 60px rgb(0 0 0 / 0.5); }
+</style>
+</head>
+<body>
+<img id="staff" alt="">
+<p class="label" style="left:60px;top:866px">Staff workspace</p>
+<div class="bezel"></div>
+<p class="label" style="left:1400px;width:410px;top:986px;text-align:center">Renter's phone</p>
+<script>
+  document.getElementById("staff").src = decodeURIComponent(location.hash.slice(1));
+</script>
+</body>
+</html>

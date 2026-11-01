@@ -1,0 +1,31 @@
+/* Video card system. Same tokens and fonts as the app (src/app/globals.css). Frame: 1920×1080. */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Public+Sans:wght@400;500;600;700&family=Geist+Mono:wght@500&display=block");
+
+:root {
+  --ink: #0f1f1d; /* dark neutral for title/chapter/end cards: the app's ink, tinted to the brand teal */
+  --paper: #f4f6f5;
+  --brand: #0b6b63;
+  --paypal: #003087;
+  --paypal-soft: #e8f1fc;
+  --ai: #5b3fd0;
+  --ai-soft: #f1edfd;
+  --hold: #f0b429;
+  --hold-ink: #6b4a00;
+  --muted: #9fb3af;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; }
+body { font-family: "Public Sans", system-ui, sans-serif; background: var(--ink); color: var(--paper); }
+.display { font-family: "Bricolage Grotesque", system-ui, sans-serif; letter-spacing: -0.02em; }
+.mono { font-family: "Geist Mono", ui-monospace, monospace; }
+
+/* Provenance tags, as in the app */
+.tag { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 8px 18px; font-weight: 600; font-size: 26px; }
+.tag-paypal { background: var(--paypal-soft); color: var(--paypal); }
+.tag-ai { background: var(--ai-soft); color: var(--ai); outline: 2px dashed color-mix(in srgb, var(--ai) 55%, transparent); outline-offset: -2px; }
+.tag-person { background: #fff; color: var(--ink); }
+.dot { width: 12px; height: 12px; border-radius: 50%; background: currentColor; }
+
+/* Always-on disclosure in the corner of app footage */
+.sandbox-corner { position: absolute; right: 28px; bottom: 28px; background: var(--hold); color: #2b1e00; font-weight: 700; font-size: 22px; padding: 8px 16px; border-radius: 10px; }

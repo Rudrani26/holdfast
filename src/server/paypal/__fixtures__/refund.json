@@ -1,0 +1,48 @@
+{
+  "_note": "Recorded PayPal Sandbox response (E4 refund $162.00, 2026-10-27). Redacted; personal fields replaced with placeholders.",
+  "status": 201,
+  "body": {
+    "id": "2K87169674218511B",
+    "amount": {
+      "currency_code": "USD",
+      "value": "162.00"
+    },
+    "note_to_payer": "Holdfast: unused deposit returned",
+    "seller_payable_breakdown": {
+      "gross_amount": {
+        "currency_code": "USD",
+        "value": "162.00"
+      },
+      "paypal_fee": {
+        "currency_code": "USD",
+        "value": "0.00"
+      },
+      "net_amount": {
+        "currency_code": "USD",
+        "value": "162.00"
+      },
+      "total_refunded_amount": {
+        "currency_code": "USD",
+        "value": "162.00"
+      }
+    },
+    "invoice_id": "HF-E4-20261027T223028Z-1",
+    "custom_id": "spike-E4-20261027T223028Z",
+    "status": "COMPLETED",
+    "create_time": "2026-10-27T15:47:07-07:00",
+    "update_time": "2026-10-27T15:47:07-07:00",
+    "links": [
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/refunds/2K87169674218511B",
+        "rel": "self",
+        "method": "GET"
+      },
+      {
+        "href": "https://api.sandbox.paypal.com/v2/payments/captures/2M190931H46376540",
+        "rel": "up",
+        "method": "GET"
+      }
+    ]
+  },
+  "debugId": "f278776b17f0b"
+}

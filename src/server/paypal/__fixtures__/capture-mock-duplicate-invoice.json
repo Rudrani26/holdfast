@@ -1,0 +1,22 @@
+{
+  "_note": "Recorded PayPal Sandbox response (E6 capture with PayPal-Mock-Response DUPLICATE_INVOICE_ID, 2026-10-27). Redacted; personal fields replaced with placeholders.",
+  "status": 422,
+  "body": {
+    "name": "UNPROCESSABLE_ENTITY",
+    "details": [
+      {
+        "issue": "DUPLICATE_INVOICE_ID",
+        "description": "Requested invoice_id has been previously captured. Possible duplicate transaction."
+      }
+    ],
+    "message": "The requested action could not be performed, semantically incorrect, or failed business validation.",
+    "debug_id": "70c28ae654da",
+    "links": [
+      {
+        "href": "https://developer.paypal.com/docs/limited-release/orders/api/#error-DUPLICATE_INVOICE_ID",
+        "rel": "information_link",
+        "method": "GET"
+      }
+    ]
+  }
+}

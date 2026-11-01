@@ -1,0 +1,51 @@
+{
+  "_note": "Merchant price lists seeded by `npm run seed`. One rule per (damageType, severity); amounts in integer cents. A finding with no matching rule is UNPRICED and staff must pick a rule or exclude it. The model never sees these prices.",
+  "priceLists": [
+    {
+      "id": "pl-headphones",
+      "name": "Headphones",
+      "currency": "USD",
+      "rules": [
+        { "damageType": "MISSING_PART", "severity": "MODERATE", "amountCents": 3800, "label": "Ear cushion replacement" },
+        { "damageType": "MISSING_PART", "severity": "SEVERE", "amountCents": 3800, "label": "Ear cushion replacement" },
+        { "damageType": "CRACK", "severity": "MODERATE", "amountCents": 4500, "label": "Cracked earcup or headband repair" },
+        { "damageType": "SCRATCH", "severity": "MINOR", "amountCents": 1200, "label": "Cosmetic scratch" },
+        { "damageType": "SCUFF", "severity": "MINOR", "amountCents": 0, "label": "Normal wear (not charged)" },
+        { "damageType": "STAIN", "severity": "MODERATE", "amountCents": 2500, "label": "Cushion deep clean" },
+        { "damageType": "TEAR", "severity": "MODERATE", "amountCents": 4000, "label": "Cushion or headband tear" },
+        { "damageType": "DENT", "severity": "MODERATE", "amountCents": 3000, "label": "Dent repair" },
+        { "damageType": "BROKEN_PART", "severity": "SEVERE", "amountCents": 12000, "label": "Broken hinge or headband" }
+      ]
+    },
+    {
+      "id": "pl-speaker",
+      "name": "Bluetooth speaker",
+      "currency": "USD",
+      "rules": [
+        { "damageType": "DENT", "severity": "MINOR", "amountCents": 1500, "label": "Small grille dent" },
+        { "damageType": "DENT", "severity": "MODERATE", "amountCents": 3500, "label": "Grille dent repair" },
+        { "damageType": "SCRATCH", "severity": "MINOR", "amountCents": 1000, "label": "Cosmetic scratch" },
+        { "damageType": "SCRATCH", "severity": "MODERATE", "amountCents": 2000, "label": "Deep body scratch" },
+        { "damageType": "SCUFF", "severity": "MINOR", "amountCents": 0, "label": "Normal wear (not charged)" },
+        { "damageType": "CRACK", "severity": "MODERATE", "amountCents": 4500, "label": "Cracked casing or button" },
+        { "damageType": "MISSING_PART", "severity": "MODERATE", "amountCents": 1500, "label": "Missing strap or cable" },
+        { "damageType": "BROKEN_PART", "severity": "SEVERE", "amountCents": 9000, "label": "Broken speaker or control" }
+      ]
+    },
+    {
+      "id": "pl-backpack",
+      "name": "Daypack",
+      "currency": "USD",
+      "rules": [
+        { "damageType": "SCUFF", "severity": "MINOR", "amountCents": 0, "label": "Normal wear (not charged)" },
+        { "damageType": "STAIN", "severity": "MINOR", "amountCents": 800, "label": "Spot clean" },
+        { "damageType": "STAIN", "severity": "MODERATE", "amountCents": 1500, "label": "Deep clean" },
+        { "damageType": "TEAR", "severity": "MINOR", "amountCents": 1200, "label": "Small tear repair" },
+        { "damageType": "TEAR", "severity": "MODERATE", "amountCents": 2500, "label": "Tear or seam repair" },
+        { "damageType": "MISSING_PART", "severity": "MODERATE", "amountCents": 1800, "label": "Missing buckle or strap" },
+        { "damageType": "BROKEN_PART", "severity": "MODERATE", "amountCents": 2200, "label": "Broken zipper" },
+        { "damageType": "BROKEN_PART", "severity": "SEVERE", "amountCents": 4500, "label": "Strap torn off" }
+      ]
+    }
+  ]
+}

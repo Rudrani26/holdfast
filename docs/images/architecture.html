@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Holdfast architecture</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Public+Sans:wght@400;500;600;700&family=Geist+Mono:wght@500&display=block">
+<style>
+  /* Source of docs/images/architecture.png (1920×1080). Same tokens as the app and the video cards. */
+  :root { --ink: #0f1f1d; --paper: #f4f6f5; --line: #c9d4d1; --brand: #0b6b63; --paypal: #003087; --paypal-soft: #e8f1fc; --ai: #5b3fd0; --ai-soft: #f1edfd; --hold: #f0b429; --muted: #5d6e6a; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  body { position: relative; font-family: "Public Sans", sans-serif; background: var(--paper); color: var(--ink); }
+  .display { font-family: "Bricolage Grotesque", sans-serif; letter-spacing: -0.02em; }
+  .mono { font-family: "Geist Mono", monospace; }
+  .abs { position: absolute; }
+  h1 { position: absolute; left: 80px; top: 56px; font-size: 56px; font-weight: 800; }
+  .sub { left: 80px; top: 136px; font-size: 24px; color: var(--muted); }
+  .box { position: absolute; border-radius: 16px; background: #fff; border: 2px solid var(--line); padding: 18px 22px; }
+  .box h2 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  .box p { font-size: 18px; line-height: 1.35; color: var(--muted); }
+  .app { position: absolute; left: 440px; top: 220px; width: 900px; height: 720px; background: #fff; border: 2px solid var(--brand); border-radius: 22px; }
+  .app-label { left: 470px; top: 240px; font-size: 22px; font-weight: 700; color: var(--brand); }
+  .step { position: absolute; top: 400px; width: 144px; height: 200px; border-radius: 14px; padding: 14px; background: var(--paper); border: 2px solid var(--line); }
+  .step .n { font-size: 15px; font-weight: 700; color: var(--muted); }
+  .step h3 { font-size: 22px; font-weight: 700; margin: 2px 0 6px; }
+  .step p { font-size: 16px; line-height: 1.3; color: var(--ink); }
+  .step.pp { background: var(--paypal-soft); border-color: var(--paypal); }
+  .step.pp h3 { color: var(--paypal); }
+  .step.ai { background: var(--ai-soft); border: 2px dashed var(--ai); }
+  .step.ai h3 { color: var(--ai); }
+  .step.people { background: #fff; border-color: var(--ink); }
+  .gate { left: 992px; top: 612px; width: 318px; font-size: 15px; font-weight: 600; color: var(--brand); line-height: 1.3; }
+  .guard { left: 470px; top: 760px; width: 840px; height: 150px; border-radius: 14px; background: var(--paper); padding: 16px 20px; }
+  .guard h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .guard ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; font-size: 17px; }
+  .guard li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); margin-right: 10px; vertical-align: middle; }
+  .svc-ai { border: 2px dashed var(--ai); background: var(--ai-soft); }
+  .svc-ai h2 { color: var(--ai); }
+  .svc-pp { border-color: var(--paypal); background: var(--paypal-soft); }
+  .svc-pp h2 { color: var(--paypal); }
+  .lbl { position: absolute; font-size: 16px; font-weight: 600; line-height: 1.25; color: var(--ink); background: var(--paper); padding: 2px 6px; border-radius: 6px; }
+  .sandbox { right: 80px; top: 72px; background: var(--hold); color: #2b1e00; font-weight: 700; font-size: 22px; padding: 8px 16px; border-radius: 10px; }
+  svg { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .app { z-index: 0; }
+</style>
+</head>
+<body>
+<h1 class="display">How Holdfast settles a deposit</h1>
+<div class="abs sub">Gemini proposes. The shop's price list prices. People approve. PayPal holds and settles the money.</div>
+<div class="abs sandbox">PayPal Sandbox · no real money</div>
+
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f1f1d"/></marker>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#003087"/></marker>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5b3fd0"/></marker>
+  </defs>
+  <!-- people → app -->
+  <path d="M380 400 H436" stroke="#0f1f1d" stroke-width="3" fill="none" marker-end="url(#a)"/>
+  <path d="M380 640 H436" stroke="#0f1f1d" stroke-width="3" fill="none" marker-end="url(#a)"/>
+  <!-- pipeline arrows -->
+  <path d="M614 500 H640" stroke="#0f1f1d" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M788 500 H814" stroke="#0f1f1d" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M962 500 H988" stroke="#0f1f1d" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M1136 500 H1162" stroke="#0f1f1d" stroke-width="3" marker-end="url(#a)"/>
+  <!-- Inspect ↔ Gemini -->
+  <path d="M716 400 V305 H1496" stroke="#5b3fd0" stroke-width="3" fill="none" stroke-dasharray="10 7" marker-end="url(#ai)"/>
+  <!-- Hold → PayPal authorize -->
+  <path d="M542 600 V680 H1420 V640 H1496" stroke="#003087" stroke-width="3" fill="none" marker-end="url(#ap)"/>
+  <!-- Settle → PayPal capture/void, webhooks back -->
+  <path d="M1310 500 H1496" stroke="#003087" stroke-width="3" fill="none" marker-end="url(#ap)"/>
+  <path d="M1500 570 H1314" stroke="#003087" stroke-width="3" fill="none" stroke-dasharray="4 6" marker-end="url(#ap)"/>
+  <!-- data -->
+  <path d="M1340 790 H1496" stroke="#5d6e6a" stroke-width="3" fill="none" marker-end="url(#a)"/>
+  <path d="M1340 900 H1496" stroke="#5d6e6a" stroke-width="3" fill="none" marker-end="url(#a)"/>
+</svg>
+
+<div class="box" style="left:80px; top:320px; width:300px; height:170px">
+  <h2>Renter</h2>
+  <p>Books and approves the hold in the PayPal popup. Accepts or contests each line from a signed link on their phone.</p>
+</div>
+<div class="box" style="left:80px; top:560px; width:300px; height:170px">
+  <h2>Shop staff</h2>
+  <p>Takes 6 guided photos at pickup and return. Confirms, re-prices or drops each proposed line.</p>
+</div>
+
+<div class="app"></div>
+<div class="abs app-label">Next.js app on Google Cloud Run</div>
+
+<div class="step pp" style="left:470px"><div class="n">1</div><h3>Hold</h3><p>$200 deposit authorized, not charged</p></div>
+<div class="step ai" style="left:644px"><div class="n">2</div><h3>Inspect</h3><p>Compare 6 photo pairs; propose new findings</p></div>
+<div class="step" style="left:818px"><div class="n">3</div><h3>Price</h3><p>Deterministic: shop price list only</p></div>
+<div class="step people" style="left:992px"><div class="n">4</div><h3>Approve</h3><p>Staff confirm; renter accepts or contests</p></div>
+<div class="step pp" style="left:1166px"><div class="n">5</div><h3>Settle</h3><p>Capture the agreed amount, void the rest</p></div>
+<div class="abs gate">Settlement runs only after staff and renter approvals are recorded. The AI never sets a price or moves money.</div>
+
+<div class="abs guard">
+  <h3>Guardrails</h3>
+  <ul>
+    <li>Zod-validated model output, one retry</li>
+    <li>Daily AI call cap, enforced in Firestore</li>
+    <li>Idempotent PayPal requests, settlement lock</li>
+    <li>Webhook signatures verified on the raw body</li>
+    <li>Integer cents; client amounts never trusted</li>
+    <li>HMAC renter links, signed staff session</li>
+  </ul>
+</div>
+
+<div class="box svc-ai" style="left:1500px; top:240px; width:340px; height:130px">
+  <h2>Gemini on Vertex AI</h2>
+  <p class="mono" style="font-size:16px">gemini-3.7-flash</p>
+  <p>Structured JSON findings</p>
+</div>
+<div class="box svc-pp" style="left:1500px; top:420px; width:340px; height:250px">
+  <h2>PayPal Sandbox</h2>
+  <p><b style="color:#003087">Orders v2</b>: create, authorize</p>
+  <p><b style="color:#003087">Payments v2</b>: capture, void, refund</p>
+  <p><b style="color:#003087">Webhooks</b>: signature-verified events</p>
+</div>
+<div class="box" style="left:1500px; top:740px; width:340px; height:100px">
+  <h2>Firestore</h2>
+  <p>Rentals, findings, audit timeline</p>
+</div>
+<div class="box" style="left:1500px; top:860px; width:340px; height:100px">
+  <h2>Cloud Storage</h2>
+  <p>Private photo bucket</p>
+</div>
+
+<div class="lbl" style="left:1010px; top:268px; color:#5b3fd0">photo pairs → JSON findings</div>
+<div class="lbl" style="left:1352px; top:458px; color:#003087">capture, void</div>
+<div class="lbl" style="left:1352px; top:580px; color:#003087">webhooks</div>
+<div class="lbl" style="left:760px; top:690px; color:#003087">authorize at booking</div>
+</body>
+</html>

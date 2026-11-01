@@ -1,6 +1,6 @@
 # DEPLOYMENT.md — Zero-additional-cash GCP deployment
 
-**Every command in this file is run by the owner, or by Claude Code only after the owner explicitly approves that specific command.** Nothing here is automatic.
+**Every command in this file is run by the owner, or by a collaborator only after the owner explicitly approves that specific command.** Nothing here is automatic.
 
 ## 1. Billing facts and residual risk
 
@@ -29,6 +29,7 @@ Rules:
 | Artifact Registry | Container images | 0.5 GB free | Yes | Keep ≤ 3 images | $0–cents |
 | Secret Manager | Secrets | Small free allowance (verify) | Yes | ~7 secrets | ~$0 |
 | Cloud Logging | Logs | Free monthly ingestion allowance (verify) | Yes | small | $0 |
+| Cloud Text-to-Speech (Chirp 3: HD) | Demo-video narration only (`video/build/tts.ts`); enabled Nov 1, 2026 with owner approval | 1M characters/month for Chirp 3: HD (checked Oct 29, 2026) | Yes | ~3k characters per full render; ≤ 60 requests per run | $0 |
 
 Not used (would cost money or add risk): load balancers, custom domains, Cloud SQL, GPUs, Firebase paid plans, min-instances > 0.
 
@@ -79,7 +80,7 @@ Generate random secrets with `openssl rand -base64 48`. Never commit them; never
 
 ## 6. Cloud Run deployment (T-070; approval required)
 
-Pre-deploy checklist: `npm run typecheck && npm run lint && npm test && npm run build && npx tsx scripts/check-bundle-secrets.ts` all pass.
+Pre-deploy checklist: `npm run typecheck && npm run lint && npm test && npm run build && npm run check:secrets` all pass (T-063: scans client-delivered build output for `.env.local` secret values and known key patterns).
 
 ```bash
 gcloud run deploy holdfast --source . --region us-central1 \
@@ -89,7 +90,8 @@ gcloud run deploy holdfast --source . --region us-central1 \
   --set-secrets PAYPAL_CLIENT_SECRET=PAYPAL_CLIENT_SECRET:latest,PAYPAL_WEBHOOK_ID=PAYPAL_WEBHOOK_ID:latest,STAFF_PASSCODE=STAFF_PASSCODE:latest,SESSION_SECRET=SESSION_SECRET:latest,RENTER_LINK_SECRET=RENTER_LINK_SECRET:latest
 ```
 Notes:
-- `NEXT_PUBLIC_*` values are inlined at **build** time; the Dockerfile must accept them as build args (or use the source deploy's build env). T-070 documents the exact approach.
+- Resolved in T-070: no `NEXT_PUBLIC_*` value is read by client code. The booking page reads `NEXT_PUBLIC_PAYPAL_CLIENT_ID` on the server at request time and passes it to the PayPal button, so the image needs **no build args** and every value is a runtime env var or secret. Exact commands: `scripts/deploy.md`.
+- Not needed: `roles/iam.serviceAccountTokenCreator` (§5). Photos are served through authenticated app routes instead of signed URLs (T-030), so no signBlob grant.
 - After the first deploy, set `APP_BASE_URL` to the `*.run.app` URL and redeploy (`gcloud run services update holdfast --update-env-vars APP_BASE_URL=...`).
 - Image cleanup: add a cleanup policy on the `cloud-run-source-deploy` Artifact Registry repository keeping the 3 most recent versions (configure in console: Artifact Registry → repository → Cleanup policies), or delete old images manually after each deploy.
 

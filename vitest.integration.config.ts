@@ -17,5 +17,7 @@ export default defineConfig({
     passWithNoTests: true,
     // Real network calls (Firestore transactions under contention, PayPal, Vertex) are slower than unit tests.
     testTimeout: 30_000,
+    // Every file wipes and reuses the shared `it_` collections, so files must not run in parallel.
+    fileParallelism: false,
   },
 });

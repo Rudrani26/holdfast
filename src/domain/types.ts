@@ -175,6 +175,15 @@ export interface Finding {
   evidence: string;
 }
 
+/** A pre-existing mark from the baseline inspection (AI_PIPELINE.md §5 BaselineResult.marks). */
+export interface BaselineMark {
+  markId: string;
+  damageType: DamageType;
+  severity: Severity;
+  box: [number, number, number, number];
+  description: string;
+}
+
 export interface Inspection {
   id: string;
   kind: InspectionKind;
@@ -190,6 +199,12 @@ export interface Inspection {
     noChangeConfidence?: number;
     rawResponsePath: string;
     findings: Finding[];
+    /** BASELINE only: pre-existing marks on the check-out photo. */
+    marks?: BaselineMark[];
+    /** No schema-valid answer after the retry (or no call possible); staff review this angle. */
+    needsHuman?: boolean;
+    /** Why the angle needs a human (no secrets; shown to staff). */
+    error?: string;
   }[];
   verdict?: InspectionVerdict;
   tokenUsage?: { input: number; output: number };

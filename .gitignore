@@ -158,3 +158,11 @@ next-env.d.ts
 
 # Owner's private photo pairs for the T-007 vision check (not committed)
 eval/spike-pairs/
+eval/clean-return/
+# Owner's real eval photos (private; referenced by eval/manifest.json, not committed)
+eval/images/
+
+# Demo video (docs/DEMO_VIDEO_PRODUCTION.md): renders, the signed-in browser profile, private demo photos
+video/out/
+video/capture/.profile/
+demo-assets/

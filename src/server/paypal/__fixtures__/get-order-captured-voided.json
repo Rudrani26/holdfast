@@ -1,0 +1,162 @@
+{
+  "_note": "Recorded PayPal Sandbox response (GET /v2/checkout/orders/{id} for spike E1 after partial capture + void, read 2026-10-28 in T-022). Redacted; personal fields replaced with placeholders.",
+  "status": 200,
+  "body": {
+    "id": "3M713225W46152355",
+    "intent": "AUTHORIZE",
+    "status": "COMPLETED",
+    "payment_source": {
+      "paypal": {
+        "email_address": "sandbox-user@example.com",
+        "account_id": "SANDBOXPAYERID",
+        "account_status": "VERIFIED",
+        "name": {
+          "given_name": "Sandbox",
+          "surname": "User"
+        },
+        "address": {
+          "country_code": "US"
+        }
+      }
+    },
+    "purchase_units": [
+      {
+        "reference_id": "spike-E1-20261027T223018Z",
+        "amount": {
+          "currency_code": "USD",
+          "value": "200.00"
+        },
+        "payee": {
+          "email_address": "sandbox-user@example.com",
+          "merchant_id": "SANDBOXMERCHANTID"
+        },
+        "description": "Security deposit hold — Spike test item (Holdfast demo)",
+        "custom_id": "spike-E1-20261027T223018Z",
+        "payments": {
+          "authorizations": [
+            {
+              "status": "VOIDED",
+              "id": "5TN13229TB9978039",
+              "amount": {
+                "currency_code": "USD",
+                "value": "200.00"
+              },
+              "custom_id": "spike-E1-20261027T223018Z",
+              "seller_protection": {
+                "status": "ELIGIBLE",
+                "dispute_categories": [
+                  "ITEM_NOT_RECEIVED",
+                  "UNAUTHORIZED_TRANSACTION"
+                ]
+              },
+              "expiration_time": "2026-11-25T22:41:33Z",
+              "links": [
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/5TN13229TB9978039",
+                  "rel": "self",
+                  "method": "GET"
+                },
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/5TN13229TB9978039/capture",
+                  "rel": "capture",
+                  "method": "POST"
+                },
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/5TN13229TB9978039/void",
+                  "rel": "void",
+                  "method": "POST"
+                },
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/5TN13229TB9978039/reauthorize",
+                  "rel": "reauthorize",
+                  "method": "POST"
+                },
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/checkout/orders/3M713225W46152355",
+                  "rel": "up",
+                  "method": "GET"
+                }
+              ],
+              "create_time": "2026-10-27T22:41:33Z",
+              "update_time": "2026-10-27T22:41:49Z"
+            }
+          ],
+          "captures": [
+            {
+              "id": "5B211957T5969872L",
+              "status": "COMPLETED",
+              "amount": {
+                "currency_code": "USD",
+                "value": "38.00"
+              },
+              "final_capture": false,
+              "disbursement_mode": "INSTANT",
+              "seller_protection": {
+                "status": "ELIGIBLE",
+                "dispute_categories": [
+                  "ITEM_NOT_RECEIVED",
+                  "UNAUTHORIZED_TRANSACTION"
+                ]
+              },
+              "seller_receivable_breakdown": {
+                "gross_amount": {
+                  "currency_code": "USD",
+                  "value": "38.00"
+                },
+                "paypal_fee": {
+                  "currency_code": "USD",
+                  "value": "1.82"
+                },
+                "net_amount": {
+                  "currency_code": "USD",
+                  "value": "36.18"
+                }
+              },
+              "invoice_id": "HF-E1-20261027T223018Z-1",
+              "custom_id": "spike-E1-20261027T223018Z",
+              "links": [
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/payments/captures/5B211957T5969872L",
+                  "rel": "self",
+                  "method": "GET"
+                },
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/payments/captures/5B211957T5969872L/refund",
+                  "rel": "refund",
+                  "method": "POST"
+                },
+                {
+                  "href": "https://api.sandbox.paypal.com/v2/payments/authorizations/5TN13229TB9978039",
+                  "rel": "up",
+                  "method": "GET"
+                }
+              ],
+              "create_time": "2026-10-27T22:41:42Z",
+              "update_time": "2026-10-27T22:41:42Z"
+            }
+          ]
+        }
+      }
+    ],
+    "payer": {
+      "name": {
+        "given_name": "Sandbox",
+        "surname": "User"
+      },
+      "email_address": "sandbox-user@example.com",
+      "payer_id": "SANDBOXPAYERID",
+      "address": {
+        "country_code": "US"
+      }
+    },
+    "create_time": "2026-10-27T22:30:19Z",
+    "update_time": "2026-10-27T22:41:34Z",
+    "links": [
+      {
+        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/3M713225W46152355",
+        "rel": "self",
+        "method": "GET"
+      }
+    ]
+  }
+}

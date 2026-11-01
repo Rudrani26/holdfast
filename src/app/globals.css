@@ -9,6 +9,16 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display-face);
+  /* Provenance: every mark on screen says who produced it. */
+  --color-paypal: #003087;
+  --color-paypal-mid: #0070e0;
+  --color-paypal-soft: #e8f1fc;
+  --color-ai: #5b3fd0;
+  --color-ai-soft: #f1edfd;
+  --color-hold: #f0b429;
+  --color-hold-soft: #fdf3dc;
+  --color-hold-ink: #6b4a00;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,24 +59,24 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --background: #f6f8f7;
+  --foreground: #16211f;
+  --card: #ffffff;
+  --card-foreground: #16211f;
+  --popover: #ffffff;
+  --popover-foreground: #16211f;
+  --primary: #0b6b63;
+  --primary-foreground: #ffffff;
+  --secondary: #e8eeec;
+  --secondary-foreground: #16211f;
+  --muted: #e8eeec;
+  --muted-foreground: #53615d;
+  --accent: #dcebe8;
+  --accent-foreground: #0b3f3a;
+  --destructive: #b91c1c;
+  --border: #d4dcd9;
+  --input: #c4cfcb;
+  --ring: #0b6b63;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -122,5 +132,37 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+}
+
+/* Settlement tape (storefront hero): one orchestrated reveal, then still. */
+@keyframes tape-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes ledger-split {
+  from {
+    width: 0;
+  }
+}
+.tape-step {
+  animation: tape-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 520ms + 200ms);
+}
+.ledger-capture {
+  animation: ledger-split 700ms cubic-bezier(0.3, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 520ms + 350ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tape-step,
+  .ledger-capture {
+    animation: none;
   }
 }

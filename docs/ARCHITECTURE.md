@@ -99,7 +99,8 @@ All collections are prefixed with `FIRESTORE_COLLECTION_PREFIX` (e.g. `dev_` loc
 { kind: "BASELINE" | "RETURN" | "RECHECK"; model: string; promptVersion: string;
   mode: "LIVE" | "REPLAY"; status: "OK" | "PARTIAL" | "FAILED";
   perAngle: { angleId: string; usable: boolean; issues: string[]; latencyMs: number;
-              noChangeConfidence?: number; rawResponsePath: string; findings: Finding[] }[];
+              noChangeConfidence?: number; rawResponsePath: string; findings: Finding[];
+              marks?: BaselineMark[]; needsHuman?: boolean; error?: string }[];  // marks/needsHuman/error added in T-032
   verdict?: "NO_NEW_DAMAGE" | "NO_CHARGES_PROPOSED_REVIEW" | "DAMAGE_PROPOSED" | "INCOMPLETE"; // RETURN only; computed by src/server/ai/verdict.ts
   tokenUsage?: { input: number; output: number }; createdAt: Timestamp }
 ```

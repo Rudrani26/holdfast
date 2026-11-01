@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Holdfast title card</title>
+<link rel="stylesheet" href="cards.css">
+<style>
+  main { position: absolute; inset: 0; padding: 0 160px; display: flex; flex-direction: column; justify-content: center; gap: 44px; }
+  .brand { display: flex; align-items: center; gap: 24px; font-size: 44px; font-weight: 700; }
+  h1 { font-size: 132px; line-height: 0.98; font-weight: 700; max-width: 14ch; }
+  /* The one bold move: the hold bar, amber, splitting into captured blue and voided hatch, as in the app's hero */
+  .ledger { display: flex; height: 26px; width: 980px; border-radius: 6px; overflow: hidden; }
+  .ledger .cap { flex: 0 0 19%; background: var(--paypal); }
+  .ledger .void { flex: 1; background: repeating-linear-gradient(135deg, var(--hold) 0 14px, color-mix(in srgb, var(--hold) 45%, var(--ink)) 14px 22px); }
+  .tags { display: flex; gap: 18px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">
+    <!-- The app's HoldfastMark (src/components/Provenance.tsx) -->
+    <svg width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0b6b63"/><path d="M10 14.5V12a6 6 0 0 1 12 0v2.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><rect x="7.5" y="14.5" width="17" height="11" rx="2.5" fill="#f0b429"/><circle cx="16" cy="20" r="1.8" fill="#0f1f1d"/></svg>
+    Holdfast
+  </div>
+  <h1 class="display">Deposits settled on evidence, not arguments.</h1>
+  <div class="ledger" aria-hidden="true"><span class="cap"></span><span class="void"></span></div>
+  <div class="tags">
+    <span class="tag tag-paypal"><span class="dot"></span>PayPal Orders v2 · Sandbox</span>
+    <span class="tag tag-ai"><span class="dot"></span>Gemini on Vertex AI</span>
+    <span class="tag tag-person"><span class="dot"></span>People decide</span>
+  </div>
+</main>
+</body>
+</html>

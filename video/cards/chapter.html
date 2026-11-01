@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Holdfast chapter card</title>
+<link rel="stylesheet" href="cards.css">
+<style>
+  main { position: absolute; inset: 0; padding: 0 160px; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+  .n { font-size: 40px; color: var(--hold); font-weight: 700; }
+  h1 { font-size: 112px; line-height: 1; font-weight: 700; }
+  p { font-size: 40px; color: var(--muted); max-width: 40ch; }
+</style>
+</head>
+<body>
+<main>
+  <span class="n" id="n"></span>
+  <h1 class="display" id="t"></h1>
+  <p id="s"></p>
+</main>
+<script>
+  // ?n=1&t=...&s=... (rendered by video/build/stills.ts)
+  const q = new URLSearchParams(location.search);
+  for (const k of ["n", "t", "s"]) document.getElementById(k).textContent = q.get(k) ?? "";
+</script>
+</body>
+</html>

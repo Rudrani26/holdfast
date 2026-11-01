@@ -1,0 +1,59 @@
+{
+  "_note": "Demo catalog seeded by `npm run seed`. Money is integer cents. Hero image: data/images/<id>.jpg, uploaded to GCS items/<id>.jpg.",
+  "items": [
+    {
+      "id": "headphones",
+      "name": "Wireless over-ear headphones",
+      "description": "Wireless over-ear headphones, matte black.",
+      "imagePath": "items/headphones.jpg",
+      "depositCents": 20000,
+      "dailyRateCents": 1800,
+      "priceListId": "pl-headphones",
+      "active": true,
+      "angles": [
+        { "id": "front", "label": "Front", "hint": "Both earcups facing the camera, headband at the top." },
+        { "id": "back", "label": "Back", "hint": "Turn the headphones around; outer earcup shells facing the camera." },
+        { "id": "left-side", "label": "Left earcup", "hint": "Close-up of the left earcup, cushion fully in frame." },
+        { "id": "right-side", "label": "Right earcup", "hint": "Close-up of the right earcup, cushion fully in frame." },
+        { "id": "top", "label": "Headband", "hint": "From above, the full headband and both hinges in frame." },
+        { "id": "bottom", "label": "Bottom and ports", "hint": "From below, showing the charging port and buttons." }
+      ]
+    },
+    {
+      "id": "speaker",
+      "name": "Portable Bluetooth speaker",
+      "description": "Portable Bluetooth speaker, silver aluminum body with metal grille.",
+      "imagePath": "items/speaker.jpg",
+      "depositCents": 12000,
+      "dailyRateCents": 1200,
+      "priceListId": "pl-speaker",
+      "active": true,
+      "angles": [
+        { "id": "front", "label": "Front grille", "hint": "Grille facing the camera, whole speaker in frame." },
+        { "id": "back", "label": "Back", "hint": "Back panel facing the camera, whole speaker in frame." },
+        { "id": "left-side", "label": "Left end", "hint": "Left end of the speaker, straight on." },
+        { "id": "right-side", "label": "Right end", "hint": "Right end of the speaker, straight on." },
+        { "id": "top", "label": "Top and buttons", "hint": "From above, all buttons in frame." },
+        { "id": "bottom", "label": "Bottom and feet", "hint": "Turn it over; rubber feet and any labels in frame." }
+      ]
+    },
+    {
+      "id": "backpack",
+      "name": "Everyday daypack",
+      "description": "Everyday daypack backpack, dark blue canvas.",
+      "imagePath": "items/backpack.jpg",
+      "depositCents": 6000,
+      "dailyRateCents": 700,
+      "priceListId": "pl-backpack",
+      "active": true,
+      "angles": [
+        { "id": "front", "label": "Front", "hint": "Front panel facing the camera, whole bag in frame, standing upright." },
+        { "id": "back", "label": "Back and straps", "hint": "Back panel and both shoulder straps in frame." },
+        { "id": "left-side", "label": "Left side", "hint": "Left side pocket straight on." },
+        { "id": "right-side", "label": "Right side", "hint": "Right side pocket straight on." },
+        { "id": "top", "label": "Top and zips", "hint": "From above, the top handle and main zips in frame." },
+        { "id": "bottom", "label": "Base", "hint": "Tip the bag back; the base fabric fully in frame." }
+      ]
+    }
+  ]
+}

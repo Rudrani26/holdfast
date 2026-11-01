@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Holdfast end card</title>
+<link rel="stylesheet" href="cards.css">
+<style>
+  main { position: absolute; inset: 0; padding: 110px 160px; display: grid; grid-template-columns: 1fr 640px; gap: 80px; align-items: center; }
+  h1 { font-size: 92px; line-height: 1.02; font-weight: 700; }
+  .rule { margin-top: 36px; font-size: 34px; line-height: 1.5; color: var(--paper); }
+  .rule b { color: var(--hold); font-weight: 700; }
+  .repo { margin-top: 48px; font-size: 34px; color: var(--hold); }
+  ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 22px; font-size: 26px; line-height: 1.4; color: var(--muted); border-left: 4px solid var(--hold); padding-left: 32px; }
+  li strong { color: var(--paper); font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <section>
+    <h1 class="display">Holdfast: fair deposits, settled exactly.</h1>
+    <p class="rule">AI proposes. People decide. <b>The price list prices.</b> PayPal settles.</p>
+    <p class="repo mono">github.com/Rudrani26/holdfast</p>
+  </section>
+  <ul>
+    <li><strong>PayPal Sandbox.</strong> No real money moved. Every PayPal ID shown is from the recorded sandbox run.</li>
+    <li><strong>Real photos only.</strong> No AI-edited or generated images. All inspections ran live on Gemini (gemini-3.7-flash, Vertex AI).</li>
+    <li><strong>Time cuts are labelled.</strong> Footage is not sped up.</li>
+    <li><strong>Narration: AI-generated voice</strong> (Google Cloud Text-to-Speech).</li>
+  </ul>
+</main>
+</body>
+</html>

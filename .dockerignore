@@ -1,0 +1,23 @@
+# Never send secrets, private photos or local state to the build (or to Cloud Build with --source).
+.env
+.env.*
+!.env.example
+*.pem
+node_modules
+.next
+.git
+.vercel
+coverage
+# Owner's private photos and recordings
+eval/spike-pairs
+eval/clean-return
+eval/images
+eval/reports
+spike/results
+# Local tooling and editor state (every root dot-file and dot-directory; the build needs none)
+.*
+*.log
+
+# Demo video: private photos, signed-in browser profile, renders
+demo-assets/
+video/

@@ -1,0 +1,43 @@
+{
+  "_note": "Recorded PayPal Sandbox response (E1 POST /v2/checkout/orders, 2026-10-27). Redacted; personal fields replaced with placeholders.",
+  "status": 200,
+  "body": {
+    "id": "3M713225W46152355",
+    "intent": "AUTHORIZE",
+    "status": "PAYER_ACTION_REQUIRED",
+    "payment_source": {
+      "paypal": {}
+    },
+    "purchase_units": [
+      {
+        "reference_id": "spike-E1-20261027T223018Z",
+        "amount": {
+          "currency_code": "USD",
+          "value": "200.00"
+        },
+        "payee": {
+          "email_address": "sandbox-user@example.com",
+          "merchant_id": "SANDBOXMERCHANTID",
+          "display_data": {
+            "brand_name": "Kestrel Gear Rentals (demo)"
+          }
+        },
+        "description": "Security deposit hold — Spike test item (Holdfast demo)",
+        "custom_id": "spike-E1-20261027T223018Z"
+      }
+    ],
+    "links": [
+      {
+        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/3M713225W46152355",
+        "rel": "self",
+        "method": "GET"
+      },
+      {
+        "href": "https://www.sandbox.paypal.com/checkoutnow?token=3M713225W46152355",
+        "rel": "payer-action",
+        "method": "GET"
+      }
+    ]
+  },
+  "debugId": "f104314ed4695"
+}

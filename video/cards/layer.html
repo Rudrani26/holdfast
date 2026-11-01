@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Holdfast video layer</title>
+<link rel="stylesheet" href="cards.css">
+<style>
+  /* Transparent 1920×1080 layers composited over app footage by video/build/edit.ts. Layout:
+     scene label top-left · cut label lower-left margin · captions bottom-centre · sandbox tag bottom-right. */
+  html, body { background: transparent; }
+  .lower { position: absolute; left: 48px; top: 40px; display: flex; gap: 20px; align-items: stretch; background: rgb(15 31 29 / 0.94); color: var(--paper); padding: 18px 30px 18px 18px; border-radius: 14px; max-width: 980px; }
+  .lower .bar { width: 8px; border-radius: 4px; background: var(--hold); }
+  .lower .kicker { font-size: 22px; color: var(--muted); }
+  .lower .title { font-size: 36px; font-weight: 700; line-height: 1.15; }
+  .tag { position: absolute; right: 28px; bottom: 46px; background: var(--hold); color: #2b1e00; font-weight: 700; font-size: 22px; padding: 8px 16px; border-radius: 10px; }
+  .cut { position: absolute; left: 40px; bottom: 170px; max-width: 380px; background: rgb(15 31 29 / 0.92); color: var(--paper); font-size: 26px; font-weight: 600; padding: 10px 20px; border-radius: 10px; }
+  .caption { position: absolute; left: 50%; bottom: 46px; transform: translateX(-50%); max-width: 1080px; width: max-content; text-align: center; background: rgb(15 31 29 / 0.86); color: #fff; font-size: 36px; font-weight: 500; line-height: 1.3; padding: 12px 26px; border-radius: 12px; }
+  .callout { position: absolute; border: 5px solid var(--hold); border-radius: 16px; box-shadow: 0 0 0 9999px rgb(15 31 29 / 0.26); }
+  .callout + .callout { box-shadow: none; }
+  .callout span { position: absolute; background: var(--hold); color: #2b1e00; font-weight: 700; font-size: 26px; padding: 8px 16px; border-radius: 10px; line-height: 1.25; }
+  .callout.right span { left: calc(100% + 18px); top: -5px; width: max-content; max-width: 236px; }
+  .callout.below span { left: -5px; bottom: -58px; white-space: nowrap; }
+  .callout.above span { left: -5px; top: -58px; white-space: nowrap; }
+  .mask { position: absolute; background: #121614; }
+</style>
+</head>
+<body>
+<script>
+  // Spec in the hash: { items: [ {kind:"lower",kicker,title} | {kind:"tag"} | {kind:"cut",text} | {kind:"caption",text}
+  //   | {kind:"callout",x,y,w,h,label,side:"right"|"below"|"above"} | {kind:"mask",x,y,w,h} ] }
+  // Layers annotate or hide OS chrome only; they never change app or PayPal content.
+  const spec = JSON.parse(decodeURIComponent(location.hash.slice(1) || "{}"));
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const add = (html) => document.body.insertAdjacentHTML("beforeend", html);
+  for (const it of spec.items ?? []) {
+    if (it.kind === "lower") add(`<div class="lower"><span class="bar"></span><div><div class="kicker">${esc(it.kicker)}</div><div class="title display">${esc(it.title)}</div></div></div>`);
+    else if (it.kind === "tag") add(`<div class="tag">PayPal Sandbox · no real money</div>`);
+    else if (it.kind === "cut") add(`<div class="cut">${esc(it.text)}</div>`);
+    else if (it.kind === "caption") add(`<div class="caption">${esc(it.text)}</div>`);
+    else if (it.kind === "mask") add(`<div class="mask" style="left:${it.x}px;top:${it.y}px;width:${it.w}px;height:${it.h}px"></div>`);
+    else if (it.kind === "callout") add(`<div class="callout ${it.side ?? "right"}" style="left:${it.x}px;top:${it.y}px;width:${it.w}px;height:${it.h}px"><span>${esc(it.label)}</span></div>`);
+  }
+</script>
+</body>
+</html>

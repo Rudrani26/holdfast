@@ -1,0 +1,271 @@
+{
+  "version": 1,
+  "extraItems": [
+    {
+      "id": "lens-hood",
+      "name": "Camera lens hood",
+      "description": "Black rubber camera lens hood."
+    },
+    {
+      "id": "mouse",
+      "name": "Wireless mouse",
+      "description": "White wireless computer mouse."
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "c001",
+      "item": "headphones",
+      "angleId": "front",
+      "source": "REAL",
+      "caseType": "NEW_DAMAGE",
+      "lighting": "window-daylight",
+      "angleDelta": "small",
+      "humanVerified": true,
+      "images": {
+        "before": "spike-pairs/1/before.jpg",
+        "after": "spike-pairs/1/after.jpg"
+      },
+      "expected": {
+        "baselineMarks": [],
+        "newFindings": [
+          {
+            "damageType": "MISSING_PART",
+            "note": "ear cushion removed (one of two)"
+          },
+          {
+            "damageType": "MISSING_PART",
+            "note": "ear cushion removed (two of two)"
+          }
+        ],
+        "shouldCharge": true
+      },
+      "notes": "Owner truth (T-007): both ear cushions removed. Headband wear is visible but was not labelled by the owner."
+    },
+    {
+      "caseId": "c002",
+      "item": "lens-hood",
+      "angleId": "front",
+      "source": "REAL",
+      "caseType": "NEW_DAMAGE",
+      "angleDelta": "small",
+      "humanVerified": true,
+      "images": {
+        "before": "spike-pairs/2/before.jpg",
+        "after": "spike-pairs/2/after.jpg"
+      },
+      "expected": {
+        "baselineMarks": [],
+        "newFindings": [
+          {
+            "note": "damage on the outer rim (type not labelled)"
+          }
+        ],
+        "shouldCharge": true
+      },
+      "notes": "Owner truth (T-007): NEW_DAMAGE outer rim of camera lens hood."
+    },
+    {
+      "caseId": "c003",
+      "item": "speaker",
+      "angleId": "front",
+      "source": "REAL",
+      "caseType": "NEW_DAMAGE",
+      "angleDelta": "small",
+      "humanVerified": true,
+      "images": {
+        "before": "spike-pairs/3/before.jpg",
+        "after": "spike-pairs/3/after.jpg"
+      },
+      "expected": {
+        "baselineMarks": [],
+        "newFindings": [
+          {
+            "note": "front-right speaker grille (type not labelled)"
+          }
+        ],
+        "shouldCharge": true
+      },
+      "notes": "Owner truth (T-007): NEW_DAMAGE front-right speaker grille."
+    },
+    {
+      "caseId": "c004",
+      "item": "backpack",
+      "angleId": "front",
+      "source": "REAL",
+      "caseType": "PREEXISTING_ONLY",
+      "subtype": "LIGHTING",
+      "lighting": "warm-indoor vs cool-daylight",
+      "angleDelta": "none",
+      "humanVerified": true,
+      "images": {
+        "before": "spike-pairs/4/before.jpg",
+        "after": "spike-pairs/4/after.jpg"
+      },
+      "expected": {
+        "baselineMarks": [
+          {
+            "damageType": "SCUFF",
+            "note": "pre-existing scuff on the front pocket"
+          }
+        ],
+        "newFindings": [],
+        "shouldCharge": false
+      },
+      "notes": "Owner truth (T-007): NO_CHANGE warm indoor lighting versus cool daylight; pre-existing scuff unchanged."
+    },
+    {
+      "caseId": "c005",
+      "item": "mouse",
+      "angleId": "front",
+      "source": "REAL",
+      "caseType": "PREEXISTING_ONLY",
+      "subtype": "ANGLE",
+      "angleDelta": "large",
+      "humanVerified": true,
+      "images": {
+        "before": "spike-pairs/5/before.jpg",
+        "after": "spike-pairs/5/after.jpg"
+      },
+      "expected": {
+        "baselineMarks": [
+          {
+            "note": "existing surface mark (type not labelled)"
+          }
+        ],
+        "newFindings": [],
+        "shouldCharge": false
+      },
+      "notes": "Owner truth (T-007): NO_CHANGE different camera angle and reflections; existing surface mark unchanged. In T-007 the model flagged ANGLE_MISMATCH (unusable)."
+    },
+    {
+      "caseId": "c006",
+      "item": "headphones",
+      "source": "REAL",
+      "caseType": "FULL_CLEAN_RETURN",
+      "subtype": "LIGHTING",
+      "lighting": "cool-daylight vs warm-lamp",
+      "angleDelta": "small",
+      "humanVerified": true,
+      "angles": {
+        "front": {
+          "before": "clean-return/headphones/before/front.jpg",
+          "after": "clean-return/headphones/after/after.jpg"
+        },
+        "back": {
+          "before": "clean-return/headphones/before/back.jpg",
+          "after": "clean-return/headphones/after/back.jpg"
+        },
+        "left-side": {
+          "before": "clean-return/headphones/before/left.jpg",
+          "after": "clean-return/headphones/after/left.jpg"
+        },
+        "right-side": {
+          "before": "clean-return/headphones/before/right.jpg",
+          "after": "clean-return/headphones/after/right.jpg"
+        },
+        "top": {
+          "before": "clean-return/headphones/before/top.jpg",
+          "after": "clean-return/headphones/after/top.jpg"
+        },
+        "bottom": {
+          "before": "clean-return/headphones/before/bottom.jpg",
+          "after": "clean-return/headphones/after/bottom.jpg"
+        }
+      },
+      "expected": {
+        "baselineMarks": [],
+        "newFindings": [],
+        "shouldCharge": false,
+        "expectedVerdict": "NO_NEW_DAMAGE"
+      },
+      "notes": "Unchanged headphones, all 6 angles, different light. T-033 live: NO_NEW_DAMAGE (12 calls)."
+    },
+    {
+      "caseId": "c007",
+      "item": "backpack",
+      "source": "REAL",
+      "caseType": "FULL_CLEAN_RETURN",
+      "subtype": "SHADOW",
+      "lighting": "indoor vs direct sun + window shadows",
+      "angleDelta": "small",
+      "humanVerified": true,
+      "angles": {
+        "front": {
+          "before": "clean-return/backpack/before/front.jpg",
+          "after": "clean-return/backpack/after/front.jpg"
+        },
+        "back": {
+          "before": "clean-return/backpack/before/back.jpg",
+          "after": "clean-return/backpack/after/back.jpg"
+        },
+        "left-side": {
+          "before": "clean-return/backpack/before/left.jpg",
+          "after": "clean-return/backpack/after/left.jpg"
+        },
+        "right-side": {
+          "before": "clean-return/backpack/before/right.jpg",
+          "after": "clean-return/backpack/after/right.jpg"
+        },
+        "top": {
+          "before": "clean-return/backpack/before/top.jpg",
+          "after": "clean-return/backpack/after/top.jpg"
+        },
+        "bottom": {
+          "before": "clean-return/backpack/before/bottom.jpg",
+          "after": "clean-return/backpack/after/bottom.jpg"
+        }
+      },
+      "expected": {
+        "baselineMarks": [],
+        "newFindings": [],
+        "shouldCharge": false,
+        "expectedVerdict": "NO_NEW_DAMAGE"
+      },
+      "notes": "Unchanged backpack, all 6 angles. Return photos in strong direct sun with hard window-frame shadows across the bag."
+    },
+    {
+      "caseId": "c008",
+      "item": "speaker",
+      "source": "REAL",
+      "caseType": "FULL_CLEAN_RETURN",
+      "subtype": "BACKGROUND",
+      "lighting": "soft indoor vs direct sun",
+      "angleDelta": "small",
+      "humanVerified": true,
+      "angles": {
+        "front": {
+          "before": "clean-return/speaker/before/front.jpg",
+          "after": "clean-return/speaker/after/front.jpg"
+        },
+        "back": {
+          "before": "clean-return/speaker/before/back.jpg",
+          "after": "clean-return/speaker/after/back.jpg"
+        },
+        "left-side": {
+          "before": "clean-return/speaker/before/left.jpg",
+          "after": "clean-return/speaker/after/left.jpg"
+        },
+        "right-side": {
+          "before": "clean-return/speaker/before/right.jpg",
+          "after": "clean-return/speaker/after/right.jpg"
+        },
+        "top": {
+          "before": "clean-return/speaker/before/top.jpg",
+          "after": "clean-return/speaker/after/top.jpg"
+        },
+        "bottom": {
+          "before": "clean-return/speaker/before/bottom.jpg",
+          "after": "clean-return/speaker/after/bottom.jpg"
+        }
+      },
+      "expected": {
+        "baselineMarks": [],
+        "newFindings": [],
+        "shouldCharge": false,
+        "expectedVerdict": "NO_NEW_DAMAGE"
+      },
+      "notes": "Unchanged speaker, all 6 angles. Return photos on a different desk and background, farther away, in direct sun."
+    }
+  ]
+}
